@@ -29,6 +29,10 @@ class MySphere extends CGFobject {
     var phiInc = Math.PI / this.latDivs;
     var thetaInc = (2 * Math.PI) / this.longDivs;
     var latVertices = this.longDivs + 1;
+    var deltax = 1/this.longDivs;
+    var deltay = 1/this.latDivs;
+    var xpos = 0;
+    var ypos = 0;
 
     // build an all-around stack at a time, starting on "north pole" and proceeding "south"
     for (let latitude = 0; latitude <= this.latDivs; latitude++) {
@@ -37,22 +41,24 @@ class MySphere extends CGFobject {
 
       // in each stack, build all the slices around, starting on longitude 0
       theta = 0;
+      xpos = 0;
       for (let longitude = 0; longitude <= this.longDivs; longitude++) {
         //--- Vertices coordinates
         var x = Math.cos(theta) * sinPhi;
         var y = cosPhi;
-        var z = Math.sin(theta) * sinPhi;
+        var z = Math.sin(-theta) * sinPhi;
         this.vertices.push(x, y, z);
 
         //--- Indices
-        if (latitude < this.latDivs || longitude < this.longDivs) {
-          var first = latitude * latVertices + longitude;
-          var second = first + latVertices;
-          // pushing two triangles using indices from this round (first, first+1)
-          // and the ones directly south (second, second+1)
+        if (latitude < this.latDivs && longitude < this.longDivs) {
+          var current = latitude * latVertices + longitude;
+          var next = current + latVertices;
+          // pushing two triangles using indices from this round (current, current+1)
+          // and the ones directly south (next, next+1)
           // (i.e. one full round of slices ahead)
-          this.indices.push(first,  first + 1, second);
-          this.indices.push( first + 1, second +1 , second);
+          
+          this.indices.push( current + 1, current, next);
+          this.indices.push( current + 1, next, next +1);
         }
 
         //--- Normals
@@ -64,11 +70,12 @@ class MySphere extends CGFobject {
         theta += thetaInc;
 
         //--- Texture Coordinates
-        // To be done... 
+        this.texCoords.push(xpos, ypos);
         // May need some additional code also in the beginning of the function.
-        
+        xpos += deltax
       }
       phi += phiInc;
+      ypos += deltay
     }
 
 

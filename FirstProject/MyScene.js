@@ -29,6 +29,9 @@ class MyScene extends CGFscene {
 
         //Objects connected to MyInterface
         this.displayAxis = true;
+
+        this.sphereMaterial = new CGFappearance(this);
+        this.sphereMaterial.loadTexture('images/earth.jpg');
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -70,6 +73,7 @@ class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
 
         //This sphere does not have defined texture coordinates
+        this.sphereMaterial.apply();
         this.incompleteSphere.display();
 
         // ---- END Primitive drawing section
