@@ -22,17 +22,17 @@ class MyUnitCubeQuad extends CGFobject {
     display() {
 
         this.scene.pushMatrix();
-        this.scene.translate(0,0,-50);
-        this.scene.scale(100,100,100);
+        this.scene.translate(0,0,-25);
+        this.scene.scale(50,50,50);
         this.material.setTexture(this.frontTexture);
         this.material.apply();
         this.plane.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.translate(0,0, 50);
+        this.scene.translate(0,0, 25);
         this.scene.rotate(Math.PI, 0, 1, 0);
-        this.scene.scale(100,100,100);
+        this.scene.scale(50,50,50);
         this.material.setTexture(this.backTexture)
         this.material.apply();
         this.plane.display();
@@ -40,18 +40,18 @@ class MyUnitCubeQuad extends CGFobject {
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.translate(-50, 0, 0);
+        this.scene.translate(-25, 0, 0);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
-        this.scene.scale(100,100,100);
+        this.scene.scale(50,50,50);
         this.material.setTexture(this.leftTexture);
         this.material.apply();
         this.plane.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.translate(50, 0, 0);
+        this.scene.translate(25, 0, 0);
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
-        this.scene.scale(100,100,100);
+        this.scene.scale(50,50,50);
         this.material.setTexture(this.rightTexture);
         this.material.apply();
         this.plane.display();
@@ -59,18 +59,18 @@ class MyUnitCubeQuad extends CGFobject {
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.translate(0, 50, 0);
+        this.scene.translate(0, 25, 0);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
-        this.scene.scale(100,100,100);
+        this.scene.scale(50,50,50);
         this.material.setTexture(this.topTexture);
         this.material.apply();
         this.plane.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
-        this.scene.translate(0, -50, 0);
+        this.scene.translate(0, -25, 0);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
-        this.scene.scale(100,100,100);
+        this.scene.scale(50,50,50);
         this.material.setTexture(this.botTexture);
         this.material.apply();
         this.plane.display();
