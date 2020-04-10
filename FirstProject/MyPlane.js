@@ -53,6 +53,13 @@ class MyPlane extends CGFobject {
             this.normals.push(0, 0, 1);
         }
 
+        this.texCoords = [
+            0, 0,
+            0, 1,
+            1, 0,
+            1, 1
+        ]
+
         this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
         this.initGLBuffers();
     }
