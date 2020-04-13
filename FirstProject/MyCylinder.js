@@ -42,8 +42,6 @@ class MyCylinder extends CGFobject {
             currentAngle += alpha;
         }
 
-        console.log(this.vertices);
-
         for (let i = 0; i <= this.vertices.length/3 - 3; i++) {
             if (i%2 == 0) {
                 this.indices.push(i, i+1, i+2);
@@ -51,9 +49,6 @@ class MyCylinder extends CGFobject {
                 this.indices.push(i+1, i, i+2);
             }
         }
-
-        console.log(this.indices);
-
     
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
