@@ -20,7 +20,8 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
         //Dropdown for cube textures
         this.gui.add(this.scene, 'selectedTexture', this.scene.textureIds).name('Selected Texture').onChange(this.scene.updateAppliedTexture.bind(this.scene));
-        
+        //Slider element in GUI
+        this.gui.add(this.scene, 'scaleFactor', 0.5, 3).name('Scale Factor');
         this.initKeys();
 
         return true;

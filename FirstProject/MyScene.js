@@ -36,6 +36,8 @@ class MyScene extends CGFscene {
 
         //Objects connected to MyInterface
         this.displayAxis = true;
+        //Scale factor
+        this.scaleFactor = 1;
 
         this.sphereMaterial = new CGFappearance(this);
         this.sphereMaterial.loadTexture('images/earth.jpg');
@@ -120,8 +122,12 @@ class MyScene extends CGFscene {
         this.popMatrix();
         this.translate(this.vehicle.position.x, this.vehicle.position.y, this.vehicle.position.z);
         this.rotate(this.vehicle.horizontalOrientation, 0, 1, 0);
+        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
         this.vehicle.display();
+
+        this.popMatrix();
+        this.pushMatrix();
 
         // ---- END Primitive drawing section
     }
