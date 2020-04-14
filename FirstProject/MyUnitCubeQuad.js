@@ -74,5 +74,8 @@ class MyUnitCubeQuad extends CGFobject {
         this.material.setTexture(this.botTexture);
         this.material.apply();
         this.plane.display();
+        
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
     }
 }
