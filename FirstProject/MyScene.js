@@ -118,22 +118,20 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
-        //This sphere does not have defined texture coordinates
-        //this.sphereMaterial.apply();
-        //this.incompleteSphere.display();
-        this.cube.display();
-        //this.cylinder.display();
-
+        
         this.pushMatrix();
-        this.popMatrix();
         this.translate(this.vehicle.position.x, this.vehicle.position.y, this.vehicle.position.z);
         this.rotate(this.vehicle.horizontalOrientation, 0, 1, 0);
         this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
         this.vehicle.display();
-
         this.popMatrix();
-        this.pushMatrix();
+
+        //This sphere does not have defined texture coordinates
+        //this.sphereMaterial.apply();
+        //this.incompleteSphere.display();
+        this.cube.display();
+        //this.cylinder.display();
 
         // ---- END Primitive drawing section
     }
