@@ -7,12 +7,13 @@ class MyUnitCubeQuad extends CGFobject {
         this.initMaterials();
     }
     initMaterials(){
-        this.topTexture = new CGFtexture(this.scene, 'images/split_cubemap/top.png');
-        this.botTexture = new CGFtexture(this.scene, 'images/split_cubemap/bottom.png');
-        this.frontTexture = new CGFtexture(this.scene, 'images/split_cubemap/front.png');
-        this.backTexture = new CGFtexture(this.scene, 'images/split_cubemap/back.png');
-        this.leftTexture = new CGFtexture(this.scene, 'images/split_cubemap/left.png');
-        this.rightTexture = new CGFtexture(this.scene, 'images/split_cubemap/right.png');
+        let cubemap = 'split_cubemap2';
+        this.topTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/top.png');
+        this.botTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/bottom.png');
+        this.frontTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/front.png');
+        this.backTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/back.png');
+        this.leftTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/left.png');
+        this.rightTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/right.png');
         this.material = new CGFappearance(this.scene);
         this.material.setAmbient(1, 1, 1, 1);
         this.material.setDiffuse(0, 0, 0, 1);

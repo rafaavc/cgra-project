@@ -107,7 +107,7 @@ class MyScene extends CGFscene {
         //This sphere does not have defined texture coordinates
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
-        //this.cube.display();
+        this.cube.display();
         //this.cylinder.display();
 
         this.pushMatrix();
