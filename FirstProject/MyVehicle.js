@@ -67,7 +67,7 @@ class MyVehicle extends CGFobject {
         this.horizontalOrientation += val*0.1;
     }
     accelarate(val){
-        this.speed += val*0.1*this.speedFactor;
+        this.speed += val*this.speedFactor;
     }
     reset(){
         this.horizontalOrientation = 0;
