@@ -54,6 +54,7 @@ class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         this.checkKeys();
+        this.vehicle.update();
     }
 
     checkKeys() {
@@ -108,6 +109,12 @@ class MyScene extends CGFscene {
         //this.incompleteSphere.display();
         //this.cube.display();
         //this.cylinder.display();
+
+        this.pushMatrix();
+        this.popMatrix();
+        this.translate(this.vehicle.position[0], this.vehicle.position[1], this.vehicle.position[2]);
+        this.rotate(this.vehicle.horizontalOrientation, 0, 1, 0);
+
         this.vehicle.display();
 
         // ---- END Primitive drawing section
