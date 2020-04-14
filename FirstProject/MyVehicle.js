@@ -7,6 +7,10 @@ class MyVehicle extends CGFobject {
     constructor(scene) {
         super(scene);
         this.initBuffers();
+
+        this.horizontalOrientation = 0; // Y axis angle
+        this.speed = 0;
+        this.position = [0, 0, 0]; // Position [X, Y, Z]
     }
   
     /**
@@ -44,9 +48,11 @@ class MyVehicle extends CGFobject {
         ];
         this.texCoords = [];
     
-        
-    
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
+    }
+    update(){
+        this.position[0] += this.speed * Math.cos(this.horizontalOrientation);
+        this.position[1] += this.speed * Math.sin(this.horizontalOrientation);
     }
 }
