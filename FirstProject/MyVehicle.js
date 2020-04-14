@@ -8,8 +8,8 @@ class MyVehicle extends CGFobject {
         super(scene);
         this.initBuffers();
 
-        this.horizontalOrientation = Math.PI/4; // Y axis angle
-        this.speed = 0.3;
+        this.horizontalOrientation = 0; // Y axis angle
+        this.speed = 0;
         this.position = {
             x: 0,
             y: 0,
@@ -58,5 +58,18 @@ class MyVehicle extends CGFobject {
     update(){
         this.position.z += this.speed * Math.cos(this.horizontalOrientation);
         this.position.x += this.speed * Math.sin(this.horizontalOrientation);
+    }
+    turn(val){
+        this.horizontalOrientation += val*0.1;
+    }
+    accelarate(val){
+        this.speed += val*0.1;
+    }
+    reset(){
+        this.horizontalOrientation = 0;
+        this.position.x = 0;
+        this.position.y = 0;
+        this.position.z = 0;
+        this.speed = 0;
     }
 }
