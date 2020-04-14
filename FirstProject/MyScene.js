@@ -26,9 +26,13 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
-        this.cube = new MyUnitCubeQuad(this);
         this.cylinder = new MyCylinder(this, 1, 5, 10);
         this.vehicle = new MyVehicle(this);
+
+        this.selectedTexture = 0;
+        this.textures = ['split_cubemap', 'split_cubemap2'];
+        this.textureIds = { 'Texture1': 0, 'Texture2': 1};
+        this.cube = new MyUnitCubeQuad(this, this.textures[this.selectedTexture]);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -80,6 +84,11 @@ class MyScene extends CGFscene {
         if (this.gui.isKeyPressed("KeyR")) {
             this.vehicle.reset();
         }
+    }
+
+    //Function that changes texture in cube map
+    updateAppliedTexture() {
+        this.cube.initMaterials(this.textures[this.selectedTexture]);
     }
 
     display() {

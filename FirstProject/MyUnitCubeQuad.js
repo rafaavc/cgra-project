@@ -1,24 +1,23 @@
 class MyUnitCubeQuad extends CGFobject {
-	constructor(scene) {
+	constructor(scene, cubemap) {
         super(scene);
         this.scene = scene;
         this.plane = new MyPlane(scene);
 
-        this.initMaterials();
+        this.initMaterials(cubemap);
+        this.material = new CGFappearance(this.scene);
+        this.material.setAmbient(1, 1, 1, 1);
+        this.material.setDiffuse(0, 0, 0, 1);
+        this.material.setSpecular(0, 0, 0, 1);
+        this.material.setShininess(10.0);
     }
-    initMaterials(){
-        let cubemap = 'split_cubemap2';
+    initMaterials(cubemap){
         this.topTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/top.png');
         this.botTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/bottom.png');
         this.frontTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/front.png');
         this.backTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/back.png');
         this.leftTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/left.png');
         this.rightTexture = new CGFtexture(this.scene, 'images/'+ cubemap + '/right.png');
-        this.material = new CGFappearance(this.scene);
-        this.material.setAmbient(1, 1, 1, 1);
-        this.material.setDiffuse(0, 0, 0, 1);
-        this.material.setSpecular(0, 0, 0, 1);
-        this.material.setShininess(10.0);
     }
     display() {
 
