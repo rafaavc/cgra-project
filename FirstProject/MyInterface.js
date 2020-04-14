@@ -21,6 +21,8 @@ class MyInterface extends CGFinterface {
         //Dropdown for cube textures
         this.gui.add(this.scene, 'selectedTexture', this.scene.textureIds).name('Selected Texture').onChange(this.scene.updateAppliedTexture.bind(this.scene));
         //Slider element in GUI
+        this.gui.add(this.scene, 'speedFactor', 0.1, 3).name('Speed Factor').onChange(this.scene.updateSpeedFactor.bind(this.scene));
+        //Vehicle scale
         this.gui.add(this.scene, 'scaleFactor', 0.5, 3).name('Scale Factor');
         this.initKeys();
 

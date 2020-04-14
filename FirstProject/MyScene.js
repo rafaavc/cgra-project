@@ -38,6 +38,8 @@ class MyScene extends CGFscene {
         this.displayAxis = true;
         //Scale factor
         this.scaleFactor = 1;
+        //Speed factor
+        this.speedFactor = 1;
 
         this.sphereMaterial = new CGFappearance(this);
         this.sphereMaterial.loadTexture('images/earth.jpg');
@@ -91,6 +93,10 @@ class MyScene extends CGFscene {
     //Function that changes texture in cube map
     updateAppliedTexture() {
         this.cube.initMaterials(this.textures[this.selectedTexture]);
+    }
+
+    updateSpeedFactor() {
+        this.vehicle.updateSpeedFactor(this.speedFactor);
     }
 
     display() {
