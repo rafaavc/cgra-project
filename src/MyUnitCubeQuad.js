@@ -26,6 +26,7 @@ class MyUnitCubeQuad extends CGFobject {
         this.scene.scale(50,50,50);
         this.material.setTexture(this.frontTexture);
         this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.plane.display();
 
         this.scene.popMatrix();
@@ -35,6 +36,7 @@ class MyUnitCubeQuad extends CGFobject {
         this.scene.scale(50,50,50);
         this.material.setTexture(this.backTexture)
         this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.plane.display();
 
 
@@ -45,6 +47,7 @@ class MyUnitCubeQuad extends CGFobject {
         this.scene.scale(50,50,50);
         this.material.setTexture(this.leftTexture);
         this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.plane.display();
 
         this.scene.popMatrix();
@@ -54,6 +57,7 @@ class MyUnitCubeQuad extends CGFobject {
         this.scene.scale(50,50,50);
         this.material.setTexture(this.rightTexture);
         this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.plane.display();
 
 
@@ -64,6 +68,7 @@ class MyUnitCubeQuad extends CGFobject {
         this.scene.scale(50,50,50);
         this.material.setTexture(this.topTexture);
         this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.plane.display();
 
         this.scene.popMatrix();
@@ -73,6 +78,7 @@ class MyUnitCubeQuad extends CGFobject {
         this.scene.scale(50,50,50);
         this.material.setTexture(this.botTexture);
         this.material.apply();
+        this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
         this.plane.display();
         
         this.scene.popMatrix();
