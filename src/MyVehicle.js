@@ -40,10 +40,15 @@ class MyVehicle extends CGFobject {
     display() {
         super.display();
         
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
         this.scene.translate(0, 10, 0);
         this.scene.scale(1, 1, 2);
         this.sphere.display();
 
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
     }
     updateSpeedFactor(sf) {
         this.speedFactor = sf;
