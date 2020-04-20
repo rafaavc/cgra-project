@@ -29,7 +29,9 @@ class MyTerrain extends CGFobject{
 		this.appearance.setTexture(this.texture);
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.heightMap = new CGFtexture(this.scene, "images/heightmap.jpg");
+        // este heightmap tem um plano com ~20 unidades de tamanho 
+        // (assumindo que o tamanho do heightmap será 50 unidades corresponte a 0.4*128 pixeis de largura)
+        this.heightMap = new CGFtexture(this.scene, "images/heightmapMod.jpg");
     }
     initShaders() {
         this.shader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
