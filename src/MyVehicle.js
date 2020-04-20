@@ -13,7 +13,7 @@ class MyVehicle extends CGFobject {
         this.speed = 0;
         this.position = {
             x: 0,
-            y: 0,
+            y: 0, // should be 10, it's 0 just for testing
             z: 0
         };
         this.speedFactor = 1;
@@ -34,18 +34,41 @@ class MyVehicle extends CGFobject {
     }
 
     initObjects() {
-        this.sphere = new MySphere(this.scene, 10, 10);
-
+        this.sphere = new MySphere(this.scene, 50, 50);
+        this.smallSphere = new MySphere(this.scene, 28, 28);
+        this.cylinder = new MyCylinder(this.scene, 0.07, 0.6, 28);
     }
     display() {
         super.display();
+
+        this.scene.popMatrix();
+        this.scene.translate(this.position.x, this.position.y, this.position.z);
+        this.scene.pushMatrix();
+
+        this.scene.scale(0.45, 0.45, 1);
+        this.sphere.display();
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(this.position.x, this.position.y-(0.5), this.position.z);
+        this.cylinder.display();
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(this.position.x, this.position.y-(0.5), this.position.z);
+        this.scene.translate(0, 0, -0.3);
+        this.scene.scale(0.07, 0.07, 0.07);
+        this.smallSphere.display();
         
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(0, 10, 0);
-        this.scene.scale(1, 1, 2);
-        this.sphere.display();
+        this.scene.translate(this.position.x, this.position.y-(0.5), this.position.z);
+        this.scene.translate(0, 0, 0.3);
+        this.scene.scale(0.07, 0.07, 0.07);
+        this.smallSphere.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
