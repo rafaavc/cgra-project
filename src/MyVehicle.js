@@ -2,11 +2,12 @@ class MyVehicle extends CGFobject {
     /**
      * @method constructor
      * @param  {CGFscene} scene - MyScene object
-     * 
      */
     constructor(scene) {
         super(scene);
+
         this.initBuffers();
+        this.initObjects();
 
         this.horizontalOrientation = 0; // Y axis angle
         this.speed = 0;
@@ -22,39 +23,27 @@ class MyVehicle extends CGFobject {
      * @method initBuffers
      * Initializes the vehicle buffers
      */
-    
     initBuffers() {
-        this.vertices = [
-            0.5, 0, -0.3,
-            -0.5, 0, -0.3,
-            0, 0, -0.5,
-            0, 0, 0.5,
-            0, 0.5, -0.3,
-            0, -0.5, -0.3
-        ];
-        this.indices = [
-            2, 1, 0,
-            0, 2, 4,
-            2, 1, 4,
-            2, 0, 5,
-            1, 2, 5,
-            3, 0, 4,
-            1, 3, 4,
-            5, 3, 1,
-            5, 0, 3
-        ];
-        this.normals = [
-            1, 0, 0,
-            -1, 0, 0,
-            0, 0, -1,
-            0, 0, 1,
-            0, 1, 0,
-            0, 1, 0
-        ];
+        this.vertices = [];
+        this.indices = [];
+        this.normals = [];
         this.texCoords = [];
     
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
+    }
+
+    initObjects() {
+        this.sphere = new MySphere(this.scene, 10, 10);
+
+    }
+    display() {
+        super.display();
+        
+        this.scene.translate(0, 10, 0);
+        this.scene.scale(1, 1, 2);
+        this.sphere.display();
+
     }
     updateSpeedFactor(sf) {
         this.speedFactor = sf;
