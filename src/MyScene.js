@@ -28,6 +28,7 @@ class MyScene extends CGFscene {
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.cylinder = new MyCylinder(this, 1, 5, 10);
         this.vehicle = new MyVehicle(this);
+        this.terrain = new MyTerrain(this, 20, 50, 8);
 
         this.selectedTexture = 0;
         this.textures = ['split_cubemap', 'split_cubemap2'];
@@ -118,20 +119,33 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
-        
+        // Scale gui
         this.pushMatrix();
         this.translate(this.vehicle.position.x, this.vehicle.position.y, this.vehicle.position.z);
         this.rotate(this.vehicle.horizontalOrientation, 0, 1, 0);
         this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
-        this.vehicle.display();
-        this.popMatrix();
+        /*this.vehicle.display();
+        this.popMatrix();*/
 
         //This sphere does not have defined texture coordinates
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
-        this.cube.display();
+        //this.cube.display();
         //this.cylinder.display();
+        /*this.appearance = new CGFappearance(this);
+		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
+		this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
+		this.appearance.setSpecular(0.0, 0.0, 0.0, 1);
+		this.appearance.setShininess(120);
+
+		this.texture = new CGFtexture(this, "images/terrain.jpg");
+		this.appearance.setTexture(this.texture);
+        this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+        this.appearance.apply();*/
+
+        this.terrain.display();
+
 
         // ---- END Primitive drawing section
     }
