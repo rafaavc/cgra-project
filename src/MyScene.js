@@ -145,13 +145,12 @@ class MyScene extends CGFscene {
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
         this.pushMatrix();
-        this.popMatrix();
         this.supply.display();
-        this.pushMatrix();
+        this.popMatrix();
+        this.vehicle.display();
         this.cube.display();
 
         //this.cylinder.display();
-        //this.vehicle.display();
 
 
         // ---- END Primitive drawing section
