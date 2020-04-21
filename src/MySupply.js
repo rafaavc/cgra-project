@@ -139,6 +139,7 @@ class MySupply extends CGFobject {
     }
 
     displayFalling() {
+        this.scene.pushMatrix();
         let mx = this.scene.getMatrix();
 
         this.scene.translate(this.position.x, this.position.y, this.position.z);
@@ -183,5 +184,6 @@ class MySupply extends CGFobject {
         this.plane.display();
 
         this.scene.setMatrix(mx);
+        this.scene.popMatrix();
     }
 }
