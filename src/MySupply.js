@@ -71,6 +71,7 @@ class MySupply extends CGFobject {
     }
 
     display() {
+        this.scene.pushMatrix();
         switch(this.supplyState) {
             case this.SupplyStates.FALLING:
                 this.displayFalling();
@@ -81,14 +82,14 @@ class MySupply extends CGFobject {
             default:
                 break;
         }
+        this.scene.popMatrix();
     }
 
     displayLanded() {
         this.scene.pushMatrix();
-        this.scene.popMatrix();
-        let mx = this.scene.getMatrix();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.scale(this.size, this.size, this.size);
+        this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
         this.scene.pushMatrix();
 
         this.scene.translate(0, -0.5, 0);
@@ -129,15 +130,14 @@ class MySupply extends CGFobject {
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.plane.display();
 
-        this.scene.setMatrix(mx);
+        this.scene.popMatrix();
     }
 
     displayFalling() {
         this.scene.pushMatrix();
-        this.scene.popMatrix();
-        let mx = this.scene.getMatrix();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.scale(this.size, this.size, this.size);
+        this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
         this.scene.pushMatrix();
 
         this.scene.translate(0, -0.5, 0);
@@ -178,6 +178,6 @@ class MySupply extends CGFobject {
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.plane.display();
 
-        this.scene.setMatrix(mx);
+        this.scene.popMatrix();
     }
 }

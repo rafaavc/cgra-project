@@ -135,7 +135,6 @@ class MyScene extends CGFscene {
         // Scale gui
         this.pushMatrix();
         
-        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 
         /*this.vehicle.display();
         this.popMatrix();*/
@@ -143,7 +142,9 @@ class MyScene extends CGFscene {
         //This sphere does not have defined texture coordinates
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
+        this.pushMatrix();
         this.supply.display();
+        this.popMatrix();
         this.vehicle.display();
         //this.cube.display();
 
