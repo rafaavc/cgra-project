@@ -8,23 +8,10 @@ class MySupply extends CGFobject {
         super(scene);
         this.scene = scene;
         this.plane = new MyPlane(scene);
-        /*
-        MY SUPPLY NEEDS TO REACH THE GROUND IN 3 SECONDS (WTF!!!)
-        */
-        this.velocity = {
-            x: 0,
-            y: 0,
-            z: 0
-        }
-
-        this.acceleration = {
-            x: 0,
-            y: -30,
-            z: 0
-        }
 
         this.lastTime = -1;
         this.supplyState = this.SupplyStates.INACTIVE;
+        this.size = 0.2;
 
         this.material = new CGFappearance(this.scene);
         this.material.setAmbient(3, 3, 3, 1);
@@ -43,6 +30,11 @@ class MySupply extends CGFobject {
         this.velocity = {
             x: 0,
             y: 0,
+            z: 0
+        }
+        this.acceleration = {
+            x: 0,
+            y: -2*this.position.y/9, // from position equation, so that the box takes exactly 3 seconds to fall
             z: 0
         }
         this.supplyState = this.SupplyStates.FALLING;
@@ -92,11 +84,13 @@ class MySupply extends CGFobject {
     }
 
     displayLanded() {
-        let mx = this.scene.getMatrix();
-
-        this.scene.translate(this.position.x, this.position.y, this.position.z);
-
         this.scene.pushMatrix();
+        this.scene.popMatrix();
+        let mx = this.scene.getMatrix();
+        this.scene.translate(this.position.x, this.position.y, this.position.z);
+        this.scene.scale(this.size, this.size, this.size);
+        this.scene.pushMatrix();
+
         this.scene.translate(0, -0.5, 0);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.plane.display();
@@ -140,11 +134,12 @@ class MySupply extends CGFobject {
 
     displayFalling() {
         this.scene.pushMatrix();
+        this.scene.popMatrix();
         let mx = this.scene.getMatrix();
-
         this.scene.translate(this.position.x, this.position.y, this.position.z);
-
+        this.scene.scale(this.size, this.size, this.size);
         this.scene.pushMatrix();
+
         this.scene.translate(0, -0.5, 0);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.plane.display();
@@ -184,6 +179,5 @@ class MySupply extends CGFobject {
         this.plane.display();
 
         this.scene.setMatrix(mx);
-        this.scene.popMatrix();
     }
 }

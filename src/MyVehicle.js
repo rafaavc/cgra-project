@@ -13,7 +13,7 @@ class MyVehicle extends CGFobject {
         this.speed = 0;
         this.position = {
             x: 0,
-            y: 0, // should be 10, it's 0 just for testing
+            y: 10, // should be 10, it's 0 just for testing
             z: 0
         };
         this.speedFactor = 1;
@@ -41,9 +41,11 @@ class MyVehicle extends CGFobject {
         this.helix = new MyHelix(this.scene);
     }
     display() {
-        super.display();
-
+        //super.display();
+        this.scene.pushMatrix();
         this.scene.popMatrix();
+        let mx = this.scene.getMatrix();
+        this.scene.rotate(this.horizontalOrientation, 0, 1, 0);
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.pushMatrix();
@@ -108,11 +110,7 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.helix.display();
 
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        this.scene.popMatrix();
-
+        this.scene.setMatrix(mx);
     }
     updateSpeedFactor(sf) {
         this.speedFactor = sf;
