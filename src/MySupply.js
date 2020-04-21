@@ -20,18 +20,10 @@ class MySupply extends CGFobject {
         this.material.setShininess(10.0);
     }
 
-    drop(posX, posY, posZ) {
+    drop(pos, vel) {
         // hello
-        this.position = {
-            x: posX,
-            y: posY,
-            z: posZ
-        }
-        this.velocity = {
-            x: 0,
-            y: 0,
-            z: 0
-        }
+        this.position = pos;
+        this.velocity = vel;
         this.acceleration = {
             x: 0,
             y: -2*this.position.y/9, // from position equation, so that the box takes exactly 3 seconds to fall

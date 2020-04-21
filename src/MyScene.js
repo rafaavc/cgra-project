@@ -48,7 +48,10 @@ class MyScene extends CGFscene {
         this.sphereMaterial.loadTexture('images/earth.jpg');
     }
     dropSupply() {
-        this.supply.drop(this.vehicle.position.x, this.vehicle.position.y, this.vehicle.position.z);
+        this.supply.drop(
+            {x: this.vehicle.position.x, y: this.vehicle.position.y, z: this.vehicle.position.z}, 
+            {x: this.vehicle.speed*Math.sin(this.vehicle.horizontalOrientation), y: 0, z: this.vehicle.speed*Math.cos(this.vehicle.horizontalOrientation)}
+        );
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -146,7 +149,7 @@ class MyScene extends CGFscene {
         this.supply.display();
         this.popMatrix();
         this.vehicle.display();
-        //this.cube.display();
+        this.cube.display();
 
         //this.cylinder.display();
 
