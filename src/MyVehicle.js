@@ -46,6 +46,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.scene.translate(this.position.x, this.position.y, this.position.z);
+        this.scene.rotate(this.horizontalOrientation, 0, 1, 0);
         this.scene.pushMatrix();
 
         this.scene.scale(0.45, 0.45, 1);
@@ -110,6 +111,58 @@ class MyVehicle extends CGFobject {
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
+
+        this.scene.translate(0.10, -0.45, -0.35);
+        this.scene.scale(0.05, 0.02, 0.06);
+        this.sphere.display();
+        
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(0.10, -0.48, -0.40);
+        this.scene.scale(0.02, 0.02, 0.02);
+        this.scene.rotate(-Math.PI/2, 0, 0, 1);
+        this.scene.rotate(Math.PI/2, 1, 0 ,0);
+        this.helix.display();
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(0.10, -0.42, -0.40);
+        this.scene.scale(0.02, 0.02 , 0.02);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.rotate(Math.PI/2, 1, 0 ,0);
+        this.helix.display();
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(-0.10, -0.45, -0.35);
+        this.scene.scale(0.05, 0.02, 0.06);
+        this.sphere.display();
+
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(-0.10, -0.48, -0.40);
+        this.scene.scale(0.02, 0.02, 0.02);
+        this.scene.rotate(-Math.PI/2, 0, 0, 1);
+        this.scene.rotate(Math.PI/2, 1, 0 ,0);
+        this.helix.display();
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(-0.10, -0.42, -0.40);
+        this.scene.scale(0.02, 0.02 , 0.02);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.rotate(Math.PI/2, 1, 0 ,0);
+        this.helix.display();
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+    
 
         this.scene.popMatrix();
 
