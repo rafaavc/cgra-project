@@ -17,6 +17,7 @@ class MyVehicle extends CGFobject {
             z: 0
         };
         this.speedFactor = 1;
+        this.scaleFactor = 1;
     }
   
     /**
@@ -43,7 +44,7 @@ class MyVehicle extends CGFobject {
         super.display();
 
         this.scene.popMatrix();
-        this.scene.scale(2, 2, 2);
+        this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.pushMatrix();
 
@@ -53,13 +54,13 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(this.position.x, this.position.y-(0.45), this.position.z);
+        this.scene.translate(0, -0.45, 0);
         this.cylinder.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(this.position.x, this.position.y-(0.45), this.position.z);
+        this.scene.translate(0, -0.45, 0);
         this.scene.translate(0, 0, -0.3);
         this.scene.scale(0.07, 0.07, 0.07);
         this.smallSphere.display();
@@ -67,7 +68,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(this.position.x, this.position.y-(0.45), this.position.z);
+        this.scene.translate(0, -0.45, 0);
         this.scene.translate(0, 0, 0.3);
         this.scene.scale(0.07, 0.07, 0.07);
         this.smallSphere.display();
@@ -110,9 +111,14 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.scene.popMatrix();
+
     }
     updateSpeedFactor(sf) {
         this.speedFactor = sf;
+    }
+    updateScaleFactor(sf) {
+        this.scaleFactor = sf;
     }
     update(){
         this.position.z += this.speed * this.speedFactor * Math.cos(this.horizontalOrientation);
