@@ -105,6 +105,10 @@ class MyScene extends CGFscene {
         this.cube.initMaterials(this.textures[this.selectedTexture]);
     }
 
+    updateScaleFactor(){
+        this.vehicle.updateScaleFactor(this.scaleFactor);
+    }
+
     updateSpeedFactor() {
         this.vehicle.updateSpeedFactor(this.speedFactor);
     }
