@@ -29,6 +29,8 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 1, 5, 10);
         this.vehicle = new MyVehicle(this);
         this.terrain = new MyTerrain(this, 20, 50, 8);
+        this.supply = new MySupply(this);
+
 
         this.selectedTexture = 0;
         this.textures = ['split_cubemap', 'split_cubemap2'];
@@ -44,6 +46,9 @@ class MyScene extends CGFscene {
 
         this.sphereMaterial = new CGFappearance(this);
         this.sphereMaterial.loadTexture('images/earth.jpg');
+    }
+    dropSupply() {
+        this.supply.drop(0, 10, 0);
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -64,6 +69,7 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys();
         this.vehicle.update();
+        this.supply.update();
     }
 
     checkKeys() {
@@ -88,6 +94,9 @@ class MyScene extends CGFscene {
 
         if (this.gui.isKeyPressed("KeyR")) {
             this.vehicle.reset();
+        }
+        if (this.gui.isKeyPressed("KeyL")) {
+            this.dropSupply();
         }
     }
 
@@ -131,10 +140,14 @@ class MyScene extends CGFscene {
         //This sphere does not have defined texture coordinates
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
-        //this.cube.display();
-        //this.cylinder.display();
+        this.pushMatrix();
+        this.popMatrix();
+        this.supply.display();
+        this.pushMatrix();
+        this.cube.display();
 
-        this.vehicle.display();
+        //this.cylinder.display();
+        //this.vehicle.display();
 
 
         // ---- END Primitive drawing section
