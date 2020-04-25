@@ -30,6 +30,7 @@ class MyVehicle extends CGFobject {
         this.normals = [];
         this.texCoords = [];
         this.helixAngle = 0;
+        this.helixTurn = 0;
     
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -79,7 +80,9 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.scale(0.3, 0.3, 0.3);
-        this.scene.translate(0, -1, -3.5);
+        this.scene.translate(0, -0.5, -2);
+        this.scene.rotate(this.helixTurn, 0, 1, 0);
+        this.scene.translate(0, -0.5, -1.5);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.helix.display();
 
@@ -87,7 +90,9 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.scale(0.3, 0.3, 0.3);
-        this.scene.translate(0, 1, -3.5);
+        this.scene.translate(0, 0.5, -2);
+        this.scene.rotate(this.helixTurn, 0, 1, 0);
+        this.scene.translate(0, 0.5, -1.5);
         this.scene.rotate(Math.PI, 0, 0, 1);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.helix.display();
@@ -183,6 +188,8 @@ class MyVehicle extends CGFobject {
     }
     turn(val){
         this.horizontalOrientation += val*0.1;
+        if (val < 0) this.helixTurn = Math.PI/20;
+        else this.helixTurn = -Math.PI/20;
     }
     accelarate(val){
         this.speed += val*this.speedFactor;
@@ -194,5 +201,9 @@ class MyVehicle extends CGFobject {
         this.position.z = 0;
         this.speed = 0;
         this.helixAngle = 0;
+        this.helixTurn = 0;
+    }
+    resetTurn(){
+        this.helixTurn = 0;
     }
 }
