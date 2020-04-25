@@ -29,6 +29,7 @@ class MyVehicle extends CGFobject {
         this.indices = [];
         this.normals = [];
         this.texCoords = [];
+        this.helixAngle = 0;
     
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -41,6 +42,7 @@ class MyVehicle extends CGFobject {
         this.helix = new MyHelix(this.scene);
     }
     display() {
+        this.helixAngle += this.speed
         //super.display();
         this.scene.pushMatrix();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
@@ -119,18 +121,20 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(0.10, -0.48, -0.40);
+        this.scene.translate(0.10, -0.45, -0.40);
         this.scene.scale(0.02, 0.02, 0.02);
-        this.scene.rotate(-Math.PI/2, 0, 0, 1);
+        this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
+        this.scene.translate(1.5, 0, -0.5);
         this.scene.rotate(Math.PI/2, 1, 0 ,0);
         this.helix.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(0.10, -0.42, -0.40);
+        this.scene.translate(0.10, -0.45, -0.40);
         this.scene.scale(0.02, 0.02 , 0.02);
-        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.rotate(-Math.PI/2 + this.helixAngle, 0, 0, 1);
+        this.scene.translate(1.5, 0, -0.5);
         this.scene.rotate(Math.PI/2, 1, 0 ,0);
         this.helix.display();
 
@@ -145,18 +149,20 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(-0.10, -0.48, -0.40);
+        this.scene.translate(-0.10, -0.45, -0.40);
         this.scene.scale(0.02, 0.02, 0.02);
-        this.scene.rotate(-Math.PI/2, 0, 0, 1);
+        this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
+        this.scene.translate(1.5, 0, -0.5);
         this.scene.rotate(Math.PI/2, 1, 0 ,0);
         this.helix.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(-0.10, -0.42, -0.40);
+        this.scene.translate(-0.10, -0.45, -0.40);
         this.scene.scale(0.02, 0.02 , 0.02);
-        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.rotate(-Math.PI/2 + this.helixAngle, 0, 0, 1);
+        this.scene.translate(1.5, 0, -0.5);
         this.scene.rotate(Math.PI/2, 1, 0 ,0);
         this.helix.display();
 
@@ -187,5 +193,6 @@ class MyVehicle extends CGFobject {
         this.position.y = 10;
         this.position.z = 0;
         this.speed = 0;
+        this.helixAngle = 0;
     }
 }
