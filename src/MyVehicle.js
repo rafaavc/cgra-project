@@ -8,6 +8,7 @@ class MyVehicle extends CGFobject {
 
         this.initBuffers();
         this.initObjects();
+        this.initTexture();
 
         this.horizontalOrientation = 0; // Y axis angle
         this.speed = 0;
@@ -20,6 +21,15 @@ class MyVehicle extends CGFobject {
         this.scaleFactor = 1;
     }
   
+    initTexture(){
+        this.appearance = new CGFappearance(this.scene);
+        this.appearance.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.appearance.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.appearance.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.appearance.setShininess(10.0);
+
+    }
+
     /**
      * @method initBuffers
      * Initializes the vehicle buffers
@@ -46,6 +56,7 @@ class MyVehicle extends CGFobject {
         this.helixAngle += this.speed
         //super.display();
         this.scene.pushMatrix();
+        this.appearance.apply();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.rotate(this.horizontalOrientation, 0, 1, 0);
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);

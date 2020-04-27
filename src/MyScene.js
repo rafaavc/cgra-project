@@ -135,7 +135,6 @@ class MyScene extends CGFscene {
         if (this.displayAxis)
             this.axis.display();
 
-        this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
 
@@ -150,15 +149,24 @@ class MyScene extends CGFscene {
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
 
+
         this.pushMatrix();
-        this.supply.display();
+        this.rotate(-Math.PI/2, 1, 0, 0);
+        this.terrain.display();
         this.popMatrix();
+
 
         this.pushMatrix();
         this.vehicle.display();
         this.popMatrix();
-        
-        this.cube.display();
+
+
+        this.pushMatrix();
+        this.supply.display();
+        this.popMatrix();
+
+
+        //this.cube.display();
 
         //this.cylinder.display();
 
