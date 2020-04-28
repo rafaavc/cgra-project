@@ -60,7 +60,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -150,7 +150,11 @@ class MyScene extends CGFscene {
         //this.incompleteSphere.display();
 
 
+<<<<<<< HEAD
         this.setDefaultAppearance();
+=======
+
+>>>>>>> 267b33677b52c59c6a0821059d3a9eff0647e47c
 
         this.pushMatrix();
         this.vehicle.display();
@@ -163,7 +167,11 @@ class MyScene extends CGFscene {
 
         this.pushMatrix();
         this.rotate(-Math.PI/2, 1, 0, 0);
+<<<<<<< HEAD
         this.terrain.display();
+=======
+        //this.terrain.display();
+>>>>>>> 267b33677b52c59c6a0821059d3a9eff0647e47c
         this.popMatrix();
 
 
