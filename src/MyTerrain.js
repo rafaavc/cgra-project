@@ -82,7 +82,6 @@ class MyTerrain extends CGFobject{
     }
     
     display() {
-		this.scene.get
 		this.appearance.apply();
         this.scene.setActiveShader(this.shader);
         this.heightMap.bind(1);
