@@ -22,11 +22,24 @@ class MyVehicle extends CGFobject {
     }
   
     initTexture(){
-        this.appearance = new CGFappearance(this.scene);
-        this.appearance.setAmbient(0.2, 0.4, 0.8, 1.0);
-        this.appearance.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.appearance.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.appearance.setShininess(10.0);
+        this.metalGrey = new CGFappearance(this.scene);
+        this.metalGrey.setAmbient(0.19225, 0.19225, 0.19225, 1);
+        this.metalGrey.setDiffuse(0.50754, 0.50754, 0.50754, 1);
+        this.metalGrey.setSpecular(0.508273, 0.508273, 0.508273, 1);
+        this.metalGrey.setShininess(51.2);
+
+        this.lightBlue = new CGFappearance(this.scene);
+        this.lightBlue.setAmbient(1, 1, 1, 1);
+        this.lightBlue.setDiffuse(1, 1, 255/255, 1);
+        this.lightBlue.setSpecular(0, 0, 0, 1.0);
+        this.lightBlue.setShininess(100.0);
+
+
+        this.blue = new CGFappearance(this.scene);
+        this.blue.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.blue.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.blue.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.blue.setShininess(10.0);
 
     }
 
@@ -56,18 +69,19 @@ class MyVehicle extends CGFobject {
         this.helixAngle += this.speed
         //super.display();
         this.scene.pushMatrix();
-        this.appearance.apply();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.rotate(this.horizontalOrientation, 0, 1, 0);
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.scene.pushMatrix();
 
+        this.lightBlue.apply();
         this.scene.scale(0.45, 0.45, 1);
         this.sphere.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.blue.apply();
         this.scene.translate(0, -0.45, 0);
         this.cylinder.display();
 
@@ -90,6 +104,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.metalGrey.apply();
         this.scene.scale(0.3, 0.3, 0.3);
         this.scene.translate(0, -0.5, -2);
         this.scene.rotate(this.helixTurn, 0, 1, 0);
@@ -130,6 +145,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.blue.apply();
         this.scene.translate(0.10, -0.45, -0.35);
         this.scene.scale(0.05, 0.02, 0.06);
         this.sphere.display();
@@ -137,6 +153,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.metalGrey.apply();
         this.scene.translate(0.10, -0.45, -0.40);
         this.scene.scale(0.02, 0.02, 0.02);
         this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
@@ -157,6 +174,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.blue.apply();
         this.scene.translate(-0.10, -0.45, -0.35);
         this.scene.scale(0.05, 0.02, 0.06);
         this.sphere.display();
@@ -165,6 +183,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.metalGrey.apply();
         this.scene.translate(-0.10, -0.45, -0.40);
         this.scene.scale(0.02, 0.02, 0.02);
         this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
