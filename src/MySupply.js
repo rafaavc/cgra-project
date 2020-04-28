@@ -13,20 +13,21 @@ class MySupply extends CGFobject {
         this.supplyState = this.SupplyStates.INACTIVE;
         this.size = 0.2;
 
-        this.setWhenFallenValues();
-
         this.material = new CGFappearance(this.scene);
         this.material.setAmbient(3, 3, 3, 1);
         this.material.setDiffuse(0, 0, 0, 1);
         this.material.setSpecular(0, 0, 0, 1);
         this.material.setShininess(10.0);
+
+        this.texture = new CGFtexture(this.scene, "images/crate_side.jpg");
+		this.material.setTexture(this.texture);
     }
 
     setWhenFallenValues() {
         this.fallenVals = {
             pn1: (Math.round(Math.random()) == 0 ? -1 : 1), // either -1 or 1
             pn2: (Math.round(Math.random()) == 0 ? -1 : 1),
-            rot1: (Math.random() * 0.25) - 0.125,
+            rot1: (Math.random() * 0.25) - 0.125, // random number between -0.125 and 0.125
             rot2: (Math.random() * 0.25) - 0.125,
             rot3: (Math.random() * 0.25) - 0.125,
             rot4: (Math.random() * 0.25) - 0.125,
@@ -94,6 +95,8 @@ class MySupply extends CGFobject {
     }
 
     displayLanded() {
+        this.material.apply();
+
         this.scene.pushMatrix();
         this.scene.translate(this.position.x, this.position.y + 0.001, this.position.z);
         this.scene.scale(this.size, this.size, this.size);
@@ -101,43 +104,45 @@ class MySupply extends CGFobject {
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
 
         this.scene.pushMatrix();
-        this.scene.translate(0, 0, 0);
+        this.scene.translate(0, 0, 0.001);
         this.scene.rotate(this.fallenVals.rot1, 0, 0, 1);
         this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(1, 0, 0);
+        this.scene.translate(1, 0, 0.002);
         this.scene.rotate(this.fallenVals.rot2, 0, 0, 1);
         this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(-1, 0, 0);
+        this.scene.translate(-1, 0, 0.003);
         this.scene.rotate(this.fallenVals.rot3, 0, 0, 1);
         this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0, 1, 0);
+        this.scene.translate(0, 1, 0.004);
         this.scene.rotate(this.fallenVals.rot4, 0, 0, 1);
         this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0, -1, 0);
+        this.scene.translate(0, -1, 0.005);
         this.scene.rotate(this.fallenVals.rot5, 0, 0, 1);
         this.plane.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        this.scene.translate(0.3*this.fallenVals.pn1, 0.4*this.fallenVals.pn2, 0);
+        this.scene.translate(0.3*this.fallenVals.pn1, 0.4*this.fallenVals.pn2, 0.006);
         this.scene.rotate(this.fallenVals.rot6, 0, 0, 1);
         this.plane.display();
         this.scene.popMatrix();
     }
 
     displayFalling() {
+        this.material.apply();
+
         this.scene.pushMatrix();
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.scale(this.size, this.size, this.size);
