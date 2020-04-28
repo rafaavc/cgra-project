@@ -34,7 +34,6 @@ class MySupply extends CGFobject {
             rot5: (Math.random() * 0.25) - 0.125,
             rot6: (Math.random() * 0.25) - 0.125
         }
-        console.log(this.fallenVals);
     }
 
     drop(pos, vel) {
