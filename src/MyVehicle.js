@@ -237,7 +237,7 @@ class MyVehicle extends CGFobject {
     reset(){
         this.horizontalOrientation = 0;
         this.position.x = 0;
-        this.position.y = 0;
+        this.position.y = 10;
         this.position.z = 0;
         this.speed = 0;
         this.helixAngle = 0;
