@@ -46,6 +46,8 @@ class MyScene extends CGFscene {
 
         this.sphereMaterial = new CGFappearance(this);
         this.sphereMaterial.loadTexture('images/earth.jpg');
+
+        this.autoPilot = false;
     }
     dropSupply() {
         this.supply.drop(
@@ -71,7 +73,7 @@ class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
         this.checkKeys();
-        this.vehicle.update();
+        this.vehicle.update(t);
         this.supply.update();
     }
 
@@ -80,30 +82,37 @@ class MyScene extends CGFscene {
         var keysPressed=false;
 
         // Check for key codes e.g. in https://keycode.info/
-        if (this.gui.isKeyPressed("KeyW")) {
-            this.vehicle.accelarate(1);
+        if (this.gui.isKeyPressed("KeyP")){
+            this.autoPilot = true;
+            this.vehicle.autoPilot();
         }
-        if (this.gui.isKeyPressed("KeyS")) {
-            this.vehicle.accelarate(-1);
-        }
+        if (!this.autoPilot){
+            if (this.gui.isKeyPressed("KeyW")) {
+                this.vehicle.accelarate(1);
+            }
+            if (this.gui.isKeyPressed("KeyS")) {
+                this.vehicle.accelarate(-1);
+            }
 
-        if (this.gui.isKeyPressed("KeyA")) {
-            this.vehicle.turn(1);
-        }
+            if (this.gui.isKeyPressed("KeyA")) {
+                this.vehicle.turn(1);
+            }
 
-        if (this.gui.isKeyPressed("KeyD")) {
-            this.vehicle.turn(-1);
-        }
+            if (this.gui.isKeyPressed("KeyD")) {
+                this.vehicle.turn(-1);
+            }
 
-        if (!this.gui.isKeyPressed("KeyD") && !this.gui.isKeyPressed("KeyA")){
-            this.vehicle.resetTurn();
+            if (!this.gui.isKeyPressed("KeyD") && !this.gui.isKeyPressed("KeyA")){
+                this.vehicle.resetTurn();
+            }
+            if (this.gui.isKeyPressed("KeyL")) {
+                this.dropSupply();
+            }
         }
 
         if (this.gui.isKeyPressed("KeyR")) {
             this.vehicle.reset();
-        }
-        if (this.gui.isKeyPressed("KeyL")) {
-            this.dropSupply();
+            this.autoPilot = false;
         }
     }
 

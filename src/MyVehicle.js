@@ -19,6 +19,7 @@ class MyVehicle extends CGFobject {
         };
         this.speedFactor = 1;
         this.scaleFactor = 1;
+        this.lastTime = 0;
     }
   
     initTexture(){
@@ -212,9 +213,18 @@ class MyVehicle extends CGFobject {
     updateScaleFactor(sf) {
         this.scaleFactor = sf;
     }
-    update(){
-        this.position.z += this.speed * this.speedFactor * Math.cos(this.horizontalOrientation);
-        this.position.x += this.speed * this.speedFactor * Math.sin(this.horizontalOrientation);
+    update(t){
+        if (!this.scene.autoPilot){
+            this.position.z += this.speed * this.speedFactor * Math.cos(this.horizontalOrientation);
+            this.position.x += this.speed * this.speedFactor * Math.sin(this.horizontalOrientation);
+        } else {
+            this.seconds += (t - this.lastTime)/1000;
+            //console.log(this.seconds);
+            this.horizontalOrientation += 2*Math.PI*((t- this.lastTime)/5000);
+            this.position.x += this.speed * Math.sin(this.horizontalOrientation);
+            this.position.z += this.speed * Math.cos(this.horizontalOrientation);
+        }
+        this.lastTime = t;
     }
     turn(val){
         this.horizontalOrientation += val*0.1;
@@ -227,7 +237,7 @@ class MyVehicle extends CGFobject {
     reset(){
         this.horizontalOrientation = 0;
         this.position.x = 0;
-        this.position.y = 10;
+        this.position.y = 0;
         this.position.z = 0;
         this.speed = 0;
         this.helixAngle = 0;
@@ -235,5 +245,10 @@ class MyVehicle extends CGFobject {
     }
     resetTurn(){
         this.helixTurn = 0;
+    }
+    autoPilot(){
+        this.speed = 1/5;
+        this.startingOrientation = this.horizontalOrientation;
+        this.seconds = 0;
     }
 }
