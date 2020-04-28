@@ -30,11 +30,11 @@ class MyTerrain extends CGFobject{
 		this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 
         // este heightmap tem um plano com ~20 unidades de tamanho 
-        // (assumindo que o tamanho do heightmap será 50 unidades corresponte a 0.4*128 pixeis de largura)
+        // (assumindo que o tamanho do heightmap será 50 unidades corresponte a 0.4*128 pixeis de largura na textura)
         this.heightMap = new CGFtexture(this.scene, "images/heightmapMod.jpg");
     }
     initShaders() {
-        this.shader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
+		this.shader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.shader.setUniformsValues({ uSampler2: 1, offsetSize: this.maxHeight });
     }
 	initBuffers() {
@@ -82,11 +82,13 @@ class MyTerrain extends CGFobject{
     }
     
     display() {
-        this.appearance.apply();
+		this.scene.get
+		this.appearance.apply();
         this.scene.setActiveShader(this.shader);
         this.heightMap.bind(1);
 		super.display();
 		this.heightMap.unbind(1);
+		this.scene.setActiveShader(this.scene.defaultShader);
     }
 
 }

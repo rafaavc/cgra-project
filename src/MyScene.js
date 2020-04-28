@@ -150,11 +150,7 @@ class MyScene extends CGFscene {
         //this.incompleteSphere.display();
 
 
-        this.pushMatrix();
-        this.rotate(-Math.PI/2, 1, 0, 0);
-        this.terrain.display();
-        this.popMatrix();
-
+        this.setDefaultAppearance();
 
         this.pushMatrix();
         this.vehicle.display();
@@ -163,6 +159,11 @@ class MyScene extends CGFscene {
 
         this.pushMatrix();
         this.supply.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.rotate(-Math.PI/2, 1, 0, 0);
+        this.terrain.display();
         this.popMatrix();
 
 
