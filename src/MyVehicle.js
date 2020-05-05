@@ -253,4 +253,7 @@ class MyVehicle extends CGFobject {
         this.startingOrientation = this.horizontalOrientation;
         this.seconds = 0;
     }
+    stopAutoPilot() {
+        this.speed = 0;
+    }
 }

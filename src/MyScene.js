@@ -29,7 +29,13 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 1, 5, 10);
         this.vehicle = new MyVehicle(this);
         this.terrain = new MyTerrain(this, 20, 50, 8);
-        this.supply = new MySupply(this);
+        this.supplies = [];
+        for (let i = 0; i < 5; i++) {
+            this.supplies.push(new MySupply(this));
+        }
+        this.nSuppliesDelivered = 0;
+        this.releasedLKey = true;
+        this.releasedPKey = true;
 
 
         this.selectedTexture = 0;
@@ -50,10 +56,21 @@ class MyScene extends CGFscene {
         this.autoPilot = false;
     }
     dropSupply(t) {
-        this.supply.drop(
-            {x: this.vehicle.position.x, y: this.vehicle.position.y, z: this.vehicle.position.z}, 
-            {x: this.vehicle.speed*Math.sin(this.vehicle.horizontalOrientation), y: 0, z: this.vehicle.speed*Math.cos(this.vehicle.horizontalOrientation)},
-            t);
+        if (this.nSuppliesDelivered < this.supplies.length) {
+            this.supplies[this.nSuppliesDelivered].drop(
+                {x: this.vehicle.position.x, y: this.vehicle.position.y, z: this.vehicle.position.z}, 
+                {x: this.vehicle.speed*Math.sin(this.vehicle.horizontalOrientation), y: 0, z: this.vehicle.speed*Math.cos(this.vehicle.horizontalOrientation)},
+                t);
+            this.nSuppliesDelivered++;
+        }
+    }
+    resetR() {
+        this.vehicle.reset();
+        this.autoPilot = false;
+        for (let i = 0; i < this.supplies.length; i++) {
+            this.supplies[i].reset();
+        }
+        this.nSuppliesDelivered = 0;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -74,17 +91,22 @@ class MyScene extends CGFscene {
     update(t){
         this.checkKeys(t);
         this.vehicle.update(t);
-        this.supply.update(t);
+        for (let i = 0; i < this.supplies.length; i++) {
+            this.supplies[i].update(t);
+        }
     }
 
     checkKeys(t) {
         var text="Keys pressed: ";
         var keysPressed=false;
+        
 
         // Check for key codes e.g. in https://keycode.info/
-        if (this.gui.isKeyPressed("KeyP")){
-            this.autoPilot = true;
-            this.vehicle.autoPilot();
+        if (this.gui.isKeyPressed("KeyP") && this.releasedPKey){
+            this.autoPilot = !this.autoPilot;
+            if (this.autoPilot) this.vehicle.autoPilot();
+            else this.vehicle.stopAutoPilot();
+            this.releasedPKey = false;
         }
         if (!this.autoPilot){
             if (this.gui.isKeyPressed("KeyW")) {
@@ -106,14 +128,19 @@ class MyScene extends CGFscene {
             if (!this.gui.isKeyPressed("KeyD") && !this.gui.isKeyPressed("KeyA")){
                 this.vehicle.resetTurn();
             }
-            if (this.gui.isKeyPressed("KeyL")) {
+            if (this.gui.isKeyPressed("KeyL") && this.releasedL) {
                 this.dropSupply(t);
+                this.releasedL = false;
             }
         }
-
+        if (!this.gui.isKeyPressed("KeyL") && !this.releasedLKey) {
+            this.releasedLKey = true;
+        }
+        if (!this.gui.isKeyPressed("KeyP") && !this.releasedPKey) {
+            this.releasedPKey = true;
+        }
         if (this.gui.isKeyPressed("KeyR")) {
-            this.vehicle.reset();
-            this.autoPilot = false;
+            this.resetR();
         }
     }
 
@@ -167,7 +194,9 @@ class MyScene extends CGFscene {
 
 
         this.pushMatrix();
-        this.supply.display();
+        for (let i = 0; i < this.supplies.length; i++) {
+            this.supplies[i].display();
+        }
         this.popMatrix();
 
         this.pushMatrix();

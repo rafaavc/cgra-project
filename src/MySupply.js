@@ -82,6 +82,10 @@ class MySupply extends CGFobject {
         this.lastTime = this.currentTime;
     }
 
+    reset() {
+        this.supplyState = this.SupplyStates.INACTIVE;
+    }
+
     display() {
         this.scene.pushMatrix();
         switch(this.supplyState) {
