@@ -42,6 +42,14 @@ class MyVehicle extends CGFobject {
         this.blue.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.blue.setShininess(10.0);
 
+        this.flagAppearence = new CGFappearance(this.scene);
+        this.flagTexture = new CGFtexture(this.scene, "images/testMap.jpg");
+        this.flagAppearence.setTexture(this.flagTexture);
+        this.flagAppearence.setTextureWrap('REPEAT', 'REPEAT');
+        this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
+		this.flagShader.setUniformsValues({ uSampler2: 1, timeFactor: 0, speed: this.speed });
+
+        this.flagHeight = new CGFtexture(this.scene, "images/waveTex.jpg");
     }
 
     /**
@@ -65,6 +73,7 @@ class MyVehicle extends CGFobject {
         this.smallSphere = new MySphere(this.scene, 28, 28);
         this.cylinder = new MyCylinder(this.scene, 0.07, 0.6, 28);
         this.helix = new MyHelix(this.scene);
+        this.flag = new MyPlane(this.scene, 100);
     }
     display() {
         this.helixAngle += this.speed
@@ -205,6 +214,16 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.scene.translate(0, 0, -1.25);
+        this.scene.scale(1, 0.25, 1);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.flagAppearence.apply();
+        this.scene.setActiveShader(this.flagShader);
+        this.flagHeight.bind(1);
+        this.flag.display();
+        this.flagHeight.unbind(1);
+		this.scene.setActiveShader(this.scene.defaultShader);
+
         this.scene.popMatrix();
     }
     updateSpeedFactor(sf) {
@@ -214,6 +233,8 @@ class MyVehicle extends CGFobject {
         this.scaleFactor = sf;
     }
     update(t){
+        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        console.log(t / 100 % 1000);
         if (!this.scene.autoPilot){
             let secondsSinceLastTime = (t - this.lastTime)/1000.;
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;

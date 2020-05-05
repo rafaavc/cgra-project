@@ -58,31 +58,3 @@ class MyPlane extends CGFobject{
 	};
 
 }
-
-        this.initGLBuffers();
-    }
-    // Drawing the plane
-    /*
-    To draw the plane we need to draw the row we defined, nDivs times.
-    Each row must be drawn patchLength lower than the one before it.
-    To draw each row, the drawElements() function is used. This function draws the geometry defined in initBuffers();
-    */
-    display() {
-        this.scene.pushMatrix();
-        for (var i = 0; i < this.nDivs; i++) {
-            super.display();
-            this.scene.translate(0, -this.patchLength, 0);
-        }
-
-        this.scene.popMatrix();
-    }
-
-    updateBuffers(complexity){
-        this.nDivs = 1 +  Math.round(9 * complexity); //complexity varies 0-1, so nDivs varies 1-10
-        this.patchLength = 1.0 / this. nDivs;
-
-        // reinitialize buffers
-        this.initBuffers();
-        this.initNormalVizBuffers();
-    }
-}
