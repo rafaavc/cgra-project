@@ -215,8 +215,9 @@ class MyVehicle extends CGFobject {
     }
     update(t){
         if (!this.scene.autoPilot){
-            this.position.z += this.speed * this.speedFactor * Math.cos(this.horizontalOrientation);
-            this.position.x += this.speed * this.speedFactor * Math.sin(this.horizontalOrientation);
+            let secondsSinceLastTime = (t - this.lastTime)/1000.;
+            this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
+            this.position.x += this.speed * Math.sin(this.horizontalOrientation) * secondsSinceLastTime;
         } else {
             this.seconds += (t - this.lastTime)/1000;
             //console.log(this.seconds);
@@ -231,8 +232,9 @@ class MyVehicle extends CGFobject {
         if (val < 0) this.helixTurn = Math.PI/20;
         else this.helixTurn = -Math.PI/20;
     }
-    accelarate(val){
+    accelerate(val){
         this.speed += val*this.speedFactor;
+        if (this.speed < 0) this.speed = 0;
     }
     reset(){
         this.horizontalOrientation = 0;

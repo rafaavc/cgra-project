@@ -49,11 +49,11 @@ class MyScene extends CGFscene {
 
         this.autoPilot = false;
     }
-    dropSupply() {
+    dropSupply(t) {
         this.supply.drop(
             {x: this.vehicle.position.x, y: this.vehicle.position.y, z: this.vehicle.position.z}, 
-            {x: this.vehicle.speed*Math.sin(this.vehicle.horizontalOrientation), y: 0, z: this.vehicle.speed*Math.cos(this.vehicle.horizontalOrientation)}
-        );
+            {x: this.vehicle.speed*Math.sin(this.vehicle.horizontalOrientation), y: 0, z: this.vehicle.speed*Math.cos(this.vehicle.horizontalOrientation)},
+            t);
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -72,12 +72,12 @@ class MyScene extends CGFscene {
     }
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        this.checkKeys();
+        this.checkKeys(t);
         this.vehicle.update(t);
-        this.supply.update();
+        this.supply.update(t);
     }
 
-    checkKeys() {
+    checkKeys(t) {
         var text="Keys pressed: ";
         var keysPressed=false;
 
@@ -88,10 +88,11 @@ class MyScene extends CGFscene {
         }
         if (!this.autoPilot){
             if (this.gui.isKeyPressed("KeyW")) {
-                this.vehicle.accelarate(1);
+                this.vehicle.accelerate(1);
+                console.log("Wpressed");
             }
             if (this.gui.isKeyPressed("KeyS")) {
-                this.vehicle.accelarate(-1);
+                this.vehicle.accelerate(-1);
             }
 
             if (this.gui.isKeyPressed("KeyA")) {
@@ -106,7 +107,7 @@ class MyScene extends CGFscene {
                 this.vehicle.resetTurn();
             }
             if (this.gui.isKeyPressed("KeyL")) {
-                this.dropSupply();
+                this.dropSupply(t);
             }
         }
 
@@ -139,6 +140,8 @@ class MyScene extends CGFscene {
         this.loadIdentity();
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
+
+        this.lights[0].update();
         
         // Draw axis
         if (this.displayAxis)

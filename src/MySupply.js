@@ -36,17 +36,21 @@ class MySupply extends CGFobject {
         }
     }
 
-    drop(pos, vel) {
+    drop(pos, vel, t) {
         this.setWhenFallenValues();
         this.position = pos;
-        this.velocity = vel;
+        this.velocity = {
+            x: vel.x*0.3,
+            y: vel.y*0.3,
+            z: vel.z*0.3
+        };
         this.acceleration = {
             x: 0,
             y: -2*this.position.y/9, // from position equation, so that the box takes exactly 3 seconds to fall
             z: 0
         }
         this.supplyState = this.SupplyStates.FALLING;
-        this.lastTime = performance.now();
+        this.lastTime = t;
     }
 
     fall() {
@@ -66,8 +70,8 @@ class MySupply extends CGFobject {
         }
     }
 
-    update() {
-        this.currentTime = performance.now();
+    update(t) {
+        this.currentTime = t;
         switch(this.supplyState) {
             case this.SupplyStates.FALLING:
                 this.fall();
