@@ -97,10 +97,6 @@ class MyScene extends CGFscene {
     }
 
     checkKeys(t) {
-        var text="Keys pressed: ";
-        var keysPressed=false;
-        
-
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyP") && this.releasedPKey){
             this.autoPilot = !this.autoPilot;
@@ -128,9 +124,9 @@ class MyScene extends CGFscene {
             if (!this.gui.isKeyPressed("KeyD") && !this.gui.isKeyPressed("KeyA")){
                 this.vehicle.resetTurn();
             }
-            if (this.gui.isKeyPressed("KeyL") && this.releasedL) {
+            if (this.gui.isKeyPressed("KeyL") && this.releasedLKey) {
                 this.dropSupply(t);
-                this.releasedL = false;
+                this.releasedLKey = false;
             }
         }
         if (!this.gui.isKeyPressed("KeyL") && !this.releasedLKey) {
