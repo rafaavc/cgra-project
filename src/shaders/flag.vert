@@ -16,7 +16,8 @@ uniform float speed;
 void main() {
 	vTextureCoord = aTextureCoord;
 
-	float val = texture2D(uSampler2, vec2(sin(timeFactor*0.1*(1.0 + speed)) * cos(timeFactor*0.1*(1.0 + speed)), 0.0) + vTextureCoord).b;
+	//float val = texture2D(uSampler2, vec2(0.0, timeFactor*0.02) + vTextureCoord).b;
+	float val = sin((vTextureCoord.x + timeFactor*0.05/* *speed*/)*25.);//*sin(timeFactor);
 	vec3 offset = aVertexNormal*val*0.03;
 
 

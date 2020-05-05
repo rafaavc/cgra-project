@@ -14,7 +14,7 @@ class MyVehicle extends CGFobject {
         this.speed = 0;
         this.position = {
             x: 0,
-            y: 10, // should be 10, it's 0 just for testing
+            y: 0, // should be 10, it's 0 just for testing
             z: 0
         };
         this.speedFactor = 1;
@@ -43,7 +43,7 @@ class MyVehicle extends CGFobject {
         this.blue.setShininess(10.0);
 
         this.flagAppearence = new CGFappearance(this.scene);
-        this.flagTexture = new CGFtexture(this.scene, "images/testMap.jpg");
+        this.flagTexture = new CGFtexture(this.scene, "images/earth.jpg");
         this.flagAppearence.setTexture(this.flagTexture);
         this.flagAppearence.setTextureWrap('REPEAT', 'REPEAT');
         this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");

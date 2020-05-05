@@ -197,7 +197,7 @@ class MyScene extends CGFscene {
 
         this.pushMatrix();
         this.rotate(-Math.PI/2, 1, 0, 0);
-        this.terrain.display();
+        //this.terrain.display();
         this.popMatrix();
 
 
