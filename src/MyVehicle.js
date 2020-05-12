@@ -14,12 +14,22 @@ class MyVehicle extends CGFobject {
         this.speed = 0;
         this.position = {
             x: 0,
-            y: 0, // should be 10, it's 0 just for testing
+            y: 10, // should be 10, it's 0 just for testing
             z: 0
         };
         this.speedFactor = 1;
         this.scaleFactor = 1;
         this.lastTime = 0;
+        this.startingPosition = {
+            x: 0,
+            y: 0,
+            z: 0
+        }
+        this.apCenterPosition = {
+            x: 0,
+            y: 0,
+            z: 0
+        }
     }
   
     initTexture(){
@@ -214,7 +224,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(0, 0, -1.25);
+        this.scene.translate(0, 0, -2);
         this.scene.scale(1, 0.25, 1);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.flagAppearence.apply();
@@ -234,17 +244,18 @@ class MyVehicle extends CGFobject {
     }
     update(t){
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
-        console.log(t / 100 % 1000);
+        let secondsSinceLastTime = (t - this.lastTime)/1000.;
         if (!this.scene.autoPilot){
-            let secondsSinceLastTime = (t - this.lastTime)/1000.;
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
             this.position.x += this.speed * Math.sin(this.horizontalOrientation) * secondsSinceLastTime;
         } else {
-            this.seconds += (t - this.lastTime)/1000;
-            //console.log(this.seconds);
-            this.horizontalOrientation += 2*Math.PI*((t- this.lastTime)/5000);
-            this.position.x += this.speed * Math.sin(this.horizontalOrientation);
-            this.position.z += this.speed * Math.cos(this.horizontalOrientation);
+
+            let angleIncrement = 2*Math.PI*secondsSinceLastTime/5; // takes 5 seconds from 0 to 2PI (T = 5s)
+
+            this.horizontalOrientation += angleIncrement;
+
+            this.position.x = this.apCenterPosition.x + 5*Math.sin(this.horizontalOrientation - Math.PI/2);
+            this.position.z = this.apCenterPosition.z + 5*Math.cos(this.horizontalOrientation - Math.PI/2);
         }
         this.lastTime = t;
     }
@@ -270,9 +281,17 @@ class MyVehicle extends CGFobject {
         this.helixTurn = 0;
     }
     autoPilot(){
-        this.speed = 1/5;
+        this.startingPosition.x = this.position.x;
+        this.startingPosition.y = this.position.y;
+        this.startingPosition.z = this.position.z;
         this.startingOrientation = this.horizontalOrientation;
-        this.seconds = 0;
+        this.apCenterPosition = {
+            x: this.position.x + 5*Math.sin(this.horizontalOrientation + Math.PI/2),
+            y: this.position.y,
+            z: this.position.z + 5*Math.cos(this.horizontalOrientation + Math.PI/2)
+        }
+        console.log(this.apCenterPosition);
+
     }
     stopAutoPilot() {
         this.speed = 0;
