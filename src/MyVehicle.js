@@ -244,7 +244,11 @@ class MyVehicle extends CGFobject {
     }
     update(t){
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+<<<<<<< HEAD
         let secondsSinceLastTime = (t - this.lastTime)/1000.;
+=======
+        //console.log(t / 100 % 1000);
+>>>>>>> 73cb40c0d582430428bbdc052f4e8df90c868f8b
         if (!this.scene.autoPilot){
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
             this.position.x += this.speed * Math.sin(this.horizontalOrientation) * secondsSinceLastTime;

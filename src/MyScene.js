@@ -29,6 +29,7 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 1, 5, 10);
         this.vehicle = new MyVehicle(this);
         this.terrain = new MyTerrain(this, 20, 50, 8);
+        this.billboard = new MyBillboard(this);
         this.supplies = [];
         for (let i = 0; i < 5; i++) {
             this.supplies.push(new MySupply(this));
@@ -63,6 +64,7 @@ class MyScene extends CGFscene {
                 t);
             this.nSuppliesDelivered++;
         }
+        this.billboard.updateShader(this.nSuppliesDelivered);
     }
     resetR() {
         this.vehicle.reset();
@@ -71,6 +73,7 @@ class MyScene extends CGFscene {
             this.supplies[i].reset();
         }
         this.nSuppliesDelivered = 0;
+        this.billboard.updateShader(this.nSuppliesDelivered);
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -200,8 +203,14 @@ class MyScene extends CGFscene {
         this.terrain.display();
         this.popMatrix();
 
+<<<<<<< HEAD
         
         this.cube.display();
+=======
+        this.billboard.display();
+
+        //this.cube.display();
+>>>>>>> 73cb40c0d582430428bbdc052f4e8df90c868f8b
 
         //this.cylinder.display();
 
