@@ -5,33 +5,32 @@ precision highp float;
 varying vec2 vTextureCoord;
 varying vec4 coords;
 
-uniform sampler2D uSampler;
-uniform sampler2D uSampler2;
 uniform int nSuppliesDelivered;
+uniform float totalAmount;
 
 void main() {
-	vec4 color = texture2D(uSampler, vTextureCoord);
-	vec4 filter = texture2D(uSampler2, vec2(0.0,0.1)+vTextureCoord);
-
-	gl_FragColor.rgb = vec3(-coords.x/5.0 + 0.5, (0.5 + coords.x/5.0), 0);
+	gl_FragColor.rgb = vec3(-1.*(coords.x-1.)/2., (coords.x+1.)/2., 0);
     gl_FragColor.a = 1.0;
+
+	float space = 1. / totalAmount;
+	float norm = 1. / 2.;
 
 	if (nSuppliesDelivered == 0){
 		gl_FragColor.rgb = vec3(0.5,0.5,0.5);
 	} else if (nSuppliesDelivered == 1){
-		if (coords.x > -1.8){
+		if (coords.x > space - norm){
 			gl_FragColor.rgb = vec3(0.5,0.5,0.5);
 		}
 	}	else if (nSuppliesDelivered == 2){
-		if (coords.x > -0.6){
+		if (coords.x > 2.*space - norm){
 			gl_FragColor.rgb = vec3(0.5,0.5,0.5);
 		}
 	}	else if (nSuppliesDelivered == 3){
-		if (coords.x > 0.6){
+		if (coords.x > 3.*space - norm){
 			gl_FragColor.rgb = vec3(0.5,0.5,0.5);
 		}
 	}	else if (nSuppliesDelivered == 4){
-		if (coords.x > 1.8){
+		if (coords.x > 4.*space - norm){
 			gl_FragColor.rgb = vec3(0.5,0.5,0.5);
 		}
 	}

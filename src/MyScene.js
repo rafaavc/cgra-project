@@ -29,7 +29,7 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 1, 5, 10);
         this.vehicle = new MyVehicle(this);
         this.terrain = new MyTerrain(this, 20, 50, 8);
-        this.billboard = new MyBillboard(this);
+        this.billboard = new MyBillboard(this, 5);
         this.supplies = [];
         for (let i = 0; i < 5; i++) {
             this.supplies.push(new MySupply(this));

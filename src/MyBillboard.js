@@ -1,9 +1,10 @@
 class MyBillboard extends CGFobject{
-    constructor(scene){
+    constructor(scene, totalAmount){
         super(scene);
         this.scene = scene;
         this.plane = new MyPlane(scene, 50);
         this.initMaterials();
+        this.totalAmount = totalAmount;
     }
     initMaterials(){
         this.appearance = new CGFappearance(this.scene);
@@ -37,13 +38,13 @@ class MyBillboard extends CGFobject{
         
         this.scene.pushMatrix();
         this.scene.setActiveShader(this.shader);
-        this.scene.translate(0, 1.3, 0);
+        this.scene.translate(0, 1.3, 0.01);
         this.scene.scale(1.8, 0.5, 1);
         this.plane.display();
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
     }
     updateShader(n){
-        this.shader.setUniformsValues({ nSuppliesDelivered: n});
+        this.shader.setUniformsValues({ nSuppliesDelivered: n, totalAmount: this.totalAmount });
     }
 }
