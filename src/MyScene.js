@@ -110,7 +110,6 @@ class MyScene extends CGFscene {
         if (!this.autoPilot){
             if (this.gui.isKeyPressed("KeyW")) {
                 this.vehicle.accelerate(1);
-                console.log("Wpressed");
             }
             if (this.gui.isKeyPressed("KeyS")) {
                 this.vehicle.accelerate(-1);
@@ -127,10 +126,11 @@ class MyScene extends CGFscene {
             if (!this.gui.isKeyPressed("KeyD") && !this.gui.isKeyPressed("KeyA")){
                 this.vehicle.resetTurn();
             }
-            if (this.gui.isKeyPressed("KeyL") && this.releasedLKey) {
-                this.dropSupply(t);
-                this.releasedLKey = false;
-            }
+        }
+
+        if (this.gui.isKeyPressed("KeyL") && this.releasedLKey) {
+            this.dropSupply(t);
+            this.releasedLKey = false;
         }
         if (!this.gui.isKeyPressed("KeyL") && !this.releasedLKey) {
             this.releasedLKey = true;
@@ -203,14 +203,9 @@ class MyScene extends CGFscene {
         this.terrain.display();
         this.popMatrix();
 
-<<<<<<< HEAD
         
         this.cube.display();
-=======
         this.billboard.display();
-
-        //this.cube.display();
->>>>>>> 73cb40c0d582430428bbdc052f4e8df90c868f8b
 
         //this.cylinder.display();
 

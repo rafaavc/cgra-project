@@ -20,11 +20,6 @@ class MyVehicle extends CGFobject {
         this.speedFactor = 1;
         this.scaleFactor = 1;
         this.lastTime = 0;
-        this.startingPosition = {
-            x: 0,
-            y: 0,
-            z: 0
-        }
         this.apCenterPosition = {
             x: 0,
             y: 0,
@@ -244,16 +239,11 @@ class MyVehicle extends CGFobject {
     }
     update(t){
         this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
-<<<<<<< HEAD
         let secondsSinceLastTime = (t - this.lastTime)/1000.;
-=======
-        //console.log(t / 100 % 1000);
->>>>>>> 73cb40c0d582430428bbdc052f4e8df90c868f8b
         if (!this.scene.autoPilot){
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
             this.position.x += this.speed * Math.sin(this.horizontalOrientation) * secondsSinceLastTime;
         } else {
-
             let angleIncrement = 2*Math.PI*secondsSinceLastTime/5; // takes 5 seconds from 0 to 2PI (T = 5s)
 
             this.horizontalOrientation += angleIncrement;
@@ -285,17 +275,12 @@ class MyVehicle extends CGFobject {
         this.helixTurn = 0;
     }
     autoPilot(){
-        this.startingPosition.x = this.position.x;
-        this.startingPosition.y = this.position.y;
-        this.startingPosition.z = this.position.z;
         this.startingOrientation = this.horizontalOrientation;
         this.apCenterPosition = {
             x: this.position.x + 5*Math.sin(this.horizontalOrientation + Math.PI/2),
             y: this.position.y,
             z: this.position.z + 5*Math.cos(this.horizontalOrientation + Math.PI/2)
         }
-        console.log(this.apCenterPosition);
-
     }
     stopAutoPilot() {
         this.speed = 0;
