@@ -3,8 +3,8 @@ class MyBillboard extends CGFobject{
         super(scene);
         this.scene = scene;
         this.plane = new MyPlane(scene, 50);
-        this.initMaterials();
         this.totalAmount = totalAmount;
+        this.initMaterials();
     }
     initMaterials(){
         this.appearance = new CGFappearance(this.scene);
@@ -13,7 +13,7 @@ class MyBillboard extends CGFobject{
         this.appearance.setSpecular(0, 0, 0, 1.0);
         this.appearance.setShininess(10.0);
         this.shader = new CGFshader(this.scene.gl, "shaders/billboards.vert", "shaders/billboards.frag");
-		this.shader.setUniformsValues({ uSampler2: 0, nSuppliesDelivered: 0 });
+		this.shader.setUniformsValues({ nSuppliesDelivered: 0, totalAmount: this.totalAmount });
     }
     display(){
         this.appearance.apply();
