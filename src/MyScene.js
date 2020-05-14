@@ -40,8 +40,8 @@ class MyScene extends CGFscene {
 
 
         this.selectedTexture = 0;
-        this.textures = ['split_cubemap', 'split_cubemap2'];
-        this.textureIds = { 'Texture1': 0, 'Texture2': 1};
+        this.textures = ['split_cubemap', 'split_cubemap2', 'split_cubemap3'];
+        this.textureIds = { 'Texture1': 0, 'Texture2': 1, 'Texture3': 2};
         this.cube = new MyUnitCubeQuad(this, this.textures[this.selectedTexture]);
 
         //Objects connected to MyInterface
