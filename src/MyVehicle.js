@@ -41,12 +41,21 @@ class MyVehicle extends CGFobject {
         this.lightBlue.setShininess(100.0);
 
 
-        this.blue = new CGFappearance(this.scene);
-        this.blue.setAmbient(0.2, 0.4, 0.8, 1.0);
-        this.blue.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.blue.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.blue.setShininess(10.0);
+        this.downAppearance = new CGFappearance(this.scene);
+        this.downAppearance.setAmbient(2, 2, 2, 1.0);
+        this.downAppearance.setDiffuse(1, 1, 1, 1.0);
+        this.downAppearance.setSpecular(1, 1, 1, 1.0);
+        this.downAppearance.setShininess(10.0);
+        this.downAppearance.loadTexture("images/downPattern.jpg");
 
+        this.mainSphere = new CGFappearance(this.scene);
+        this.mainSphere.setAmbient(1.5, 1.5, 1.5, 1.0);
+        this.mainSphere.setDiffuse(0, 0, 0, 1.0);
+        this.mainSphere.setSpecular(0, 0, 0, 1);
+        this.mainSphere.setShininess(10.0);
+        this.mainSphere.loadTexture("images/mainPattern.jpg");
+        this.mainSphere.setTextureWrap('REPEAT', 'REPEAT');
+        
         this.flagAppearence = new CGFappearance(this.scene);
         this.flagTexture = new CGFtexture(this.scene, "images/earth.jpg");
         this.flagAppearence.setTexture(this.flagTexture);
@@ -91,14 +100,14 @@ class MyVehicle extends CGFobject {
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.scene.pushMatrix();
 
-        this.lightBlue.apply();
+        this.mainSphere.apply();
         this.scene.scale(0.45, 0.45, 1);
         this.sphere.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.blue.apply();
+        this.downAppearance.apply();
         this.scene.translate(0, -0.45, 0);
         this.cylinder.display();
 
@@ -162,7 +171,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.blue.apply();
+        this.downAppearance.apply();
         this.scene.translate(0.10, -0.45, -0.35);
         this.scene.scale(0.05, 0.02, 0.06);
         this.sphere.display();
@@ -191,7 +200,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.blue.apply();
+        this.downAppearance.apply();
         this.scene.translate(-0.10, -0.45, -0.35);
         this.scene.scale(0.05, 0.02, 0.06);
         this.sphere.display();
