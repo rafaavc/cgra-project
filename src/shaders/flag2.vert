@@ -1,4 +1,3 @@
-
 attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 attribute vec2 aTextureCoord;
@@ -15,12 +14,11 @@ uniform float speed;
 
 void main() {
 	vTextureCoord = aTextureCoord;
+    vTextureCoord.x = -aTextureCoord.x;
 
-	//float val = texture2D(uSampler2, vec2(0.0, timeFactor*0.02) + vTextureCoord).b;
-	float val = sin((vTextureCoord.x + timeFactor*0.05*speed)*25.);//*sin(timeFactor);
+	float val = sin((vTextureCoord.x + timeFactor*0.05 *speed)*25.);
 	vec3 offset = aVertexNormal*val*0.03;
 
 
 	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition + offset, 1.0);
 }
-

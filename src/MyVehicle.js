@@ -53,6 +53,8 @@ class MyVehicle extends CGFobject {
         this.flagAppearence.setTextureWrap('REPEAT', 'REPEAT');
         this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
 		this.flagShader.setUniformsValues({ uSampler2: 1, timeFactor: 0, speed: this.speed });
+        this.flagShader2 = new CGFshader(this.scene.gl, "shaders/flag2.vert", "shaders/flag.frag");
+		this.flagShader2.setUniformsValues({ uSampler2: 1, timeFactor: 0, speed: this.speed });
 
         this.flagHeight = new CGFtexture(this.scene, "images/waveTex.jpg");
     }
@@ -227,6 +229,19 @@ class MyVehicle extends CGFobject {
         this.flagHeight.bind(1);
         this.flag.display();
         this.flagHeight.unbind(1);
+        this.scene.setActiveShader(this.scene.defaultShader);
+        
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(0, 0, -2);
+        this.scene.scale(1, 0.25, -1);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.flagAppearence.apply();
+        this.scene.setActiveShader(this.flagShader2);
+        this.flagHeight.bind(1);
+        this.flag.display();
+        this.flagHeight.unbind(1);
 		this.scene.setActiveShader(this.scene.defaultShader);
 
         this.scene.popMatrix();
@@ -238,7 +253,8 @@ class MyVehicle extends CGFobject {
         this.scaleFactor = sf;
     }
     update(t){
-        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 1) });
+        this.flagShader2.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 1) });
         let secondsSinceLastTime = (t - this.lastTime)/1000.;
         if (!this.scene.autoPilot){
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
