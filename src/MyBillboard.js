@@ -8,12 +8,19 @@ class MyBillboard extends CGFobject{
     }
     initMaterials(){
         this.appearance = new CGFappearance(this.scene);
-        this.appearance.setAmbient(1, 1, 1, 1.0);
+        this.appearance.setAmbient(1.07, 1.07, 1.07, 1.0);
         this.appearance.setDiffuse(0, 0, 0, 1.0);
         this.appearance.setSpecular(0, 0, 0, 1.0);
         this.appearance.setShininess(10.0);
         this.shader = new CGFshader(this.scene.gl, "shaders/billboards.vert", "shaders/billboards.frag");
-		this.shader.setUniformsValues({ nSuppliesDelivered: 0, totalAmount: this.totalAmount });
+        this.shader.setUniformsValues({ nSuppliesDelivered: 0, totalAmount: this.totalAmount });
+        
+        this.billBoardAppearance = new CGFappearance(this.scene);
+        this.billBoardAppearance.setAmbient(10, 10, 10, 1.0);
+        this.billBoardAppearance.setDiffuse(0, 0, 0, 1.0);
+        this.billBoardAppearance.setSpecular(0, 0, 0, 1.0);
+        this.billBoardAppearance.setShininess(10.0);
+        this.billBoardAppearance.loadTexture("images/BillBoard.png");
     }
     display(){
         this.appearance.apply();
@@ -30,6 +37,7 @@ class MyBillboard extends CGFobject{
         this.plane.display();
         this.scene.popMatrix();
 
+        this.billBoardAppearance.apply();
         this.scene.pushMatrix();
         this.scene.translate(0, 1.5, 0);
         this.scene.scale(2, 1, 1);
