@@ -262,8 +262,8 @@ class MyVehicle extends CGFobject {
         this.scaleFactor = sf;
     }
     update(t){
-        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 1) });
-        this.flagShader2.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 1) });
+        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 0.3) });
+        this.flagShader2.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 0.3) });
         let secondsSinceLastTime = (t - this.lastTime)/1000.;
         if (!this.scene.autoPilot){
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
