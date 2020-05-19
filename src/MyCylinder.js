@@ -40,6 +40,7 @@ class MyCylinder extends CGFobject {
             this.normals.push(cosA, sinA, 0);
 
             currentAngle += alpha;
+            if (Math.abs(currentAngle - 2*Math.PI) < 0.01) currentAngle = 2*Math.PI;
         }
 
         for (let i = 0; i <= this.vertices.length/3 - 3; i++) {

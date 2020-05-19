@@ -85,9 +85,9 @@ class MyVehicle extends CGFobject {
     }
 
     initObjects() {
-        this.sphere = new MySphere(this.scene, 50, 50);
-        this.smallSphere = new MySphere(this.scene, 28, 28);
-        this.cylinder = new MyCylinder(this.scene, 0.07, 0.6, 28);
+        this.sphere = new MySphere(this.scene, 50, 30);
+        this.smallSphere = new MySphere(this.scene, 28, 15);
+        this.cylinder = new MyCylinder(this.scene, 0.07, 0.6, 20);
         this.helix = new MyHelix(this.scene);
         this.flag = new MyPlane(this.scene, 100);
     }
