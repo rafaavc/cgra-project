@@ -29,8 +29,8 @@ class MyVehicle extends CGFobject {
   
     initTexture(){
         this.metalGrey = new CGFappearance(this.scene);
-        this.metalGrey.setAmbient(0.19225, 0.19225, 0.19225, 1);
-        this.metalGrey.setDiffuse(0.50754, 0.50754, 0.50754, 1);
+        this.metalGrey.setAmbient(0.5, 0.5, 0.5, 1);
+        this.metalGrey.setDiffuse(0.5, 0.5, 0.5, 1);
         this.metalGrey.setSpecular(0.508273, 0.508273, 0.508273, 1);
         this.metalGrey.setShininess(51.2);
 
@@ -41,23 +41,30 @@ class MyVehicle extends CGFobject {
         this.lightBlue.setShininess(100.0);
 
 
-        this.downAppearance = new CGFappearance(this.scene);
-        this.downAppearance.setAmbient(2, 2, 2, 1.0);
-        this.downAppearance.setDiffuse(1, 1, 1, 1.0);
-        this.downAppearance.setSpecular(1, 1, 1, 1.0);
-        this.downAppearance.setShininess(10.0);
-        this.downAppearance.loadTexture("images/downPattern.jpg");
+        this.downCylinder = new CGFappearance(this.scene);
+        this.downCylinder.setAmbient(2, 2, 2, 1.0);
+        this.downCylinder.setDiffuse(1, 1, 1, 1.0);
+        this.downCylinder.setSpecular(1, 1, 1, 1.0);
+        this.downCylinder.setShininess(10.0);
+        this.downCylinder.loadTexture("images/downPattern.jpg");
+
+        this.cylinderSpheres = new CGFappearance(this.scene);
+        this.cylinderSpheres.setAmbient(2, 2, 2, 1.0);
+        this.cylinderSpheres.setDiffuse(1, 1, 1, 1.0);
+        this.cylinderSpheres.setSpecular(1, 1, 1, 1.0);
+        this.cylinderSpheres.setShininess(10.0);
+        this.cylinderSpheres.loadTexture("images/engSimpleSquare.jpg");
 
         this.mainSphere = new CGFappearance(this.scene);
-        this.mainSphere.setAmbient(1.5, 1.5, 1.5, 1.0);
-        this.mainSphere.setDiffuse(0, 0, 0, 1.0);
-        this.mainSphere.setSpecular(0, 0, 0, 1);
+        this.mainSphere.setAmbient(2, 2, 2, 1.0);
+        this.mainSphere.setDiffuse(1, 1, 1, 1.0);
+        this.mainSphere.setSpecular(1, 1, 1, 1);
         this.mainSphere.setShininess(10.0);
         this.mainSphere.loadTexture("images/mainPattern.jpg");
         this.mainSphere.setTextureWrap('REPEAT', 'REPEAT');
         
         this.flagAppearence = new CGFappearance(this.scene);
-        this.flagTexture = new CGFtexture(this.scene, "images/earth.jpg");
+        this.flagTexture = new CGFtexture(this.scene, "images/feup.jpg");
         this.flagAppearence.setTexture(this.flagTexture);
         this.flagAppearence.setTextureWrap('REPEAT', 'REPEAT');
         this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
@@ -102,18 +109,21 @@ class MyVehicle extends CGFobject {
 
         this.mainSphere.apply();
         this.scene.scale(0.45, 0.45, 1);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.sphere.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.downAppearance.apply();
+        this.downCylinder.apply();
         this.scene.translate(0, -0.45, 0);
         this.cylinder.display();
 
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        this.cylinderSpheres.apply();
+        
         this.scene.translate(0, -0.45, 0);
         this.scene.translate(0, 0, -0.3);
         this.scene.scale(0.07, 0.07, 0.07);
@@ -171,16 +181,26 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.downAppearance.apply();
-        this.scene.translate(0.10, -0.45, -0.35);
-        this.scene.scale(0.05, 0.02, 0.06);
-        this.sphere.display();
-        
+        this.cylinderSpheres.apply();
+
+        //this.downAppearance.apply();
+        this.scene.translate(0.09, -0.45, -0.3);
+        this.scene.scale(0.03, 0.02, 0.06);
+        this.smallSphere.display();
+
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+        //this.downAppearance.apply();
+        this.scene.translate(-0.09, -0.45, -0.3);
+        this.scene.scale(0.03, 0.02, 0.06);
+        this.smallSphere.display();
+        
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+        
         this.metalGrey.apply();
-        this.scene.translate(0.10, -0.45, -0.40);
+        this.scene.translate(0.09, -0.45, -0.35);
         this.scene.scale(0.02, 0.02, 0.02);
         this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
         this.scene.translate(1.5, 0, -0.5);
@@ -190,7 +210,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(0.10, -0.45, -0.40);
+        this.scene.translate(0.09, -0.45, -0.35);
         this.scene.scale(0.02, 0.02 , 0.02);
         this.scene.rotate(-Math.PI/2 + this.helixAngle, 0, 0, 1);
         this.scene.translate(1.5, 0, -0.5);
@@ -200,17 +220,8 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.downAppearance.apply();
-        this.scene.translate(-0.10, -0.45, -0.35);
-        this.scene.scale(0.05, 0.02, 0.06);
-        this.sphere.display();
-
-
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
         this.metalGrey.apply();
-        this.scene.translate(-0.10, -0.45, -0.40);
+        this.scene.translate(-0.09, -0.45, -0.35);
         this.scene.scale(0.02, 0.02, 0.02);
         this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
         this.scene.translate(1.5, 0, -0.5);
@@ -220,7 +231,7 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
-        this.scene.translate(-0.10, -0.45, -0.40);
+        this.scene.translate(-0.09, -0.45, -0.35);
         this.scene.scale(0.02, 0.02 , 0.02);
         this.scene.rotate(-Math.PI/2 + this.helixAngle, 0, 0, 1);
         this.scene.translate(1.5, 0, -0.5);
