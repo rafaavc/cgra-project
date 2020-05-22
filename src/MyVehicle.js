@@ -6,7 +6,7 @@ class MyVehicle extends CGFobject {
     constructor(scene) {
         super(scene);
 
-        this.initTexture();
+        this.initTextures();
         this.initObjects();
 
         this.helixAngle = 0;
@@ -29,19 +29,12 @@ class MyVehicle extends CGFobject {
         }
     }
   
-    initTexture(){
+    initTextures(){
         this.metalGrey = new CGFappearance(this.scene);
         this.metalGrey.setAmbient(0.5, 0.5, 0.5, 1);
         this.metalGrey.setDiffuse(0.5, 0.5, 0.5, 1);
         this.metalGrey.setSpecular(0.508273, 0.508273, 0.508273, 1);
         this.metalGrey.setShininess(51.2);
-
-        this.lightBlue = new CGFappearance(this.scene);
-        this.lightBlue.setAmbient(1, 1, 1, 1);
-        this.lightBlue.setDiffuse(1, 1, 255/255, 1);
-        this.lightBlue.setSpecular(0, 0, 0, 1.0);
-        this.lightBlue.setShininess(100.0);
-
 
         this.downCylinder = new CGFappearance(this.scene);
         this.downCylinder.setAmbient(2, 2, 2, 1.0);
@@ -64,27 +57,6 @@ class MyVehicle extends CGFobject {
         this.mainSphere.setShininess(10.0);
         this.mainSphere.loadTexture("images/mainPattern.jpg");
         this.mainSphere.setTextureWrap('REPEAT', 'REPEAT');
-        
-        this.flagAppearence = new CGFappearance(this.scene);
-        this.flagTexture = new CGFtexture(this.scene, "images/feup.jpg");
-        this.flagAppearence.setTexture(this.flagTexture);
-        this.flagAppearence.setTextureWrap('REPEAT', 'REPEAT');
-        this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
-		this.flagShader.setUniformsValues({ uSampler2: 1, timeFactor: 0, speed: this.speed });
-        this.flagShader2 = new CGFshader(this.scene.gl, "shaders/flag2.vert", "shaders/flag.frag");
-		this.flagShader2.setUniformsValues({ uSampler2: 1, timeFactor: 0, speed: this.speed });
-
-        this.flagHeight = new CGFtexture(this.scene, "images/waveTex.jpg");
-    }
-
-    /**
-     * @method initBuffers
-     * Initializes the vehicle buffers
-     */
-    initBuffers() {
-    
-        this.primitiveType = this.scene.gl.TRIANGLES;
-        this.initGLBuffers();
     }
 
     initObjects() {
@@ -92,7 +64,7 @@ class MyVehicle extends CGFobject {
         this.smallSphere = new MySphere(this.scene, 28, 15);
         this.cylinder = new MyCylinder(this.scene, 0.07, 0.6, 20);
         this.helix = new MyHelix(this.scene);
-        this.flag = new MyPlane(this.scene, 100);
+        this.flag = new MyFlag(this.scene);
         this.propeller = new MyPropeller(this.scene, this.metalGrey, this.cylinderSpheres, this.smallSphere, this.helix);
     }
 
@@ -210,27 +182,7 @@ class MyVehicle extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.translate(0, 0, -2);
-        this.scene.scale(1, 0.25, 1);
-        this.scene.rotate(Math.PI/2, 0, 1, 0);
-        this.flagAppearence.apply();
-        this.scene.setActiveShader(this.flagShader);
-        this.flagHeight.bind(1);
         this.flag.display();
-        this.flagHeight.unbind(1);
-        this.scene.setActiveShader(this.scene.defaultShader);
-        
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        this.scene.translate(0, 0, -2);
-        this.scene.scale(1, 0.25, -1);
-        this.scene.rotate(Math.PI/2, 0, 1, 0);
-        this.flagAppearence.apply();
-        this.scene.setActiveShader(this.flagShader2);
-        this.flagHeight.bind(1);
-        this.flag.display();
-        this.flagHeight.unbind(1);
-		this.scene.setActiveShader(this.scene.defaultShader);
 
         this.scene.popMatrix();
     }
@@ -241,8 +193,7 @@ class MyVehicle extends CGFobject {
         this.scaleFactor = sf;
     }
     update(t){
-        this.flagShader.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 0.3) });
-        this.flagShader2.setUniformsValues({ timeFactor: t / 100 % 1000, speed: Math.max(Math.abs(this.speed), 0.3) });
+        this.flag.update(t, this.speed);
         let secondsSinceLastTime = (t - this.lastTime)/1000.;
         if (!this.scene.autoPilot){
             this.position.z += this.speed * Math.cos(this.horizontalOrientation) * secondsSinceLastTime;
