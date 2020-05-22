@@ -219,16 +219,14 @@ class MyScene extends CGFscene {
     }
 
     /**
-     * @method setViewingMode
-     * @param {Number} v the viewing mode
+     * @method updateViewingMode used by the gui
      */
-    setViewingMode(v) {
-        if (v == this.ViewingModes.ONLYVEHICLE) {
+    updateViewingMode() {
+        if (this.viewingMode == this.ViewingModes.ONLYVEHICLE) {
             this.vehicle.setY(0);
-        } else if (v == this.ViewingModes.ALL) {
+        } else if (this.viewingMode == this.ViewingModes.ALL) {
             this.vehicle.setY(10);
         } else return;
-        this.viewingMode = v;
     }
     /**
      * @method updateAppliedTexture changes the cube's texture (used in the gui)

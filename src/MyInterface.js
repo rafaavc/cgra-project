@@ -24,6 +24,8 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'speedFactor', 0.1, 3).name('Speed Factor').onChange(this.scene.updateSpeedFactor.bind(this.scene));
         //Vehicle scale
         this.gui.add(this.scene, 'scaleFactor', 0.5, 3).name('Scale Factor').onChange(this.scene.updateScaleFactor.bind(this.scene));
+        //Viewing mode
+        this.gui.add(this.scene, 'viewingMode', this.scene.ViewingModes).name('Viewing Mode').onChange(this.scene.updateViewingMode.bind(this.scene));
         this.initKeys();
 
         return true;
