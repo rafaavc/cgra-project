@@ -6,15 +6,17 @@ class MyVehicle extends CGFobject {
     constructor(scene) {
         super(scene);
 
-        this.initBuffers();
-        this.initObjects();
         this.initTexture();
+        this.initObjects();
+
+        this.helixAngle = 0;
+        this.helixTurn = 0;
 
         this.horizontalOrientation = 0; // Y axis angle
         this.speed = 0;
         this.position = {
             x: 0,
-            y: 10, // should be 10, it's 0 just for testing
+            y: 0, // should be 10, it's 0 just for testing
             z: 0
         };
         this.speedFactor = 1;
@@ -80,12 +82,6 @@ class MyVehicle extends CGFobject {
      * Initializes the vehicle buffers
      */
     initBuffers() {
-        this.vertices = [];
-        this.indices = [];
-        this.normals = [];
-        this.texCoords = [];
-        this.helixAngle = 0;
-        this.helixTurn = 0;
     
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
@@ -97,16 +93,22 @@ class MyVehicle extends CGFobject {
         this.cylinder = new MyCylinder(this.scene, 0.07, 0.6, 20);
         this.helix = new MyHelix(this.scene);
         this.flag = new MyPlane(this.scene, 100);
+        this.propeller = new MyPropeller(this.scene, this.metalGrey, this.cylinderSpheres, this.smallSphere, this.helix);
     }
+
     display() {
         this.helixAngle += this.speed
         //super.display();
         this.scene.pushMatrix();
+        
         this.scene.translate(this.position.x, this.position.y, this.position.z);
         this.scene.rotate(this.horizontalOrientation, 0, 1, 0);
         this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.scene.pushMatrix();
 
+        /**
+         * Drawing the main body
+         */
         this.mainSphere.apply();
         this.scene.scale(0.45, 0.45, 1);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -115,6 +117,10 @@ class MyVehicle extends CGFobject {
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
+
+        /**
+         * Drawing the cylinder in the bottom
+         */
         this.downCylinder.apply();
         this.scene.translate(0, -0.45, 0);
         this.cylinder.display();
@@ -137,6 +143,26 @@ class MyVehicle extends CGFobject {
         this.scene.scale(0.07, 0.07, 0.07);
         this.smallSphere.display();
 
+        /**
+         * Drawing the bottom propellers
+         */
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(0.09, -0.45, -0.3);
+        this.propeller.display(this.helixAngle);
+
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.translate(-0.09, -0.45, -0.3);
+        this.propeller.display(this.helixAngle);
+
+
+        /**
+         * Drawing the helixes in the back
+         */
         this.scene.popMatrix();
         this.scene.pushMatrix();
 
@@ -177,67 +203,9 @@ class MyVehicle extends CGFobject {
         this.scene.rotate(Math.PI/2, 0, 1, 0);
         this.helix.display();
 
-        
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        this.cylinderSpheres.apply();
-
-        //this.downAppearance.apply();
-        this.scene.translate(0.09, -0.45, -0.3);
-        this.scene.scale(0.03, 0.02, 0.06);
-        this.smallSphere.display();
-
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        //this.downAppearance.apply();
-        this.scene.translate(-0.09, -0.45, -0.3);
-        this.scene.scale(0.03, 0.02, 0.06);
-        this.smallSphere.display();
-        
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-        
-        this.metalGrey.apply();
-        this.scene.translate(0.09, -0.45, -0.35);
-        this.scene.scale(0.02, 0.02, 0.02);
-        this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
-        this.scene.translate(1.5, 0, -0.5);
-        this.scene.rotate(Math.PI/2, 1, 0 ,0);
-        this.helix.display();
-
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        this.scene.translate(0.09, -0.45, -0.35);
-        this.scene.scale(0.02, 0.02 , 0.02);
-        this.scene.rotate(-Math.PI/2 + this.helixAngle, 0, 0, 1);
-        this.scene.translate(1.5, 0, -0.5);
-        this.scene.rotate(Math.PI/2, 1, 0 ,0);
-        this.helix.display();
-
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        this.metalGrey.apply();
-        this.scene.translate(-0.09, -0.45, -0.35);
-        this.scene.scale(0.02, 0.02, 0.02);
-        this.scene.rotate(Math.PI/2 + this.helixAngle, 0, 0, 1);
-        this.scene.translate(1.5, 0, -0.5);
-        this.scene.rotate(Math.PI/2, 1, 0 ,0);
-        this.helix.display();
-
-        this.scene.popMatrix();
-        this.scene.pushMatrix();
-
-        this.scene.translate(-0.09, -0.45, -0.35);
-        this.scene.scale(0.02, 0.02 , 0.02);
-        this.scene.rotate(-Math.PI/2 + this.helixAngle, 0, 0, 1);
-        this.scene.translate(1.5, 0, -0.5);
-        this.scene.rotate(Math.PI/2, 1, 0 ,0);
-        this.helix.display();
-
+        /**
+         * Drawing the flag
+         */
         this.scene.popMatrix();
         this.scene.pushMatrix();
 

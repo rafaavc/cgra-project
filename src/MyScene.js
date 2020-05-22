@@ -192,7 +192,7 @@ class MyScene extends CGFscene {
         this.popMatrix();
 
 
-        this.pushMatrix();
+        /*this.pushMatrix();
         for (let i = 0; i < this.supplies.length; i++) {
             this.supplies[i].display();
         }
@@ -203,9 +203,9 @@ class MyScene extends CGFscene {
         this.terrain.display();
         this.popMatrix();
 
-        
+        */
         this.cube.display();
-        this.billboard.display();
+        //this.billboard.display();
 
         //this.cylinder.display();
 
