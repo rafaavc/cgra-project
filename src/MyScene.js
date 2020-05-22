@@ -53,8 +53,6 @@ class MyScene extends CGFscene {
 
         this.sphereMaterial = new CGFappearance(this);
         this.sphereMaterial.loadTexture('images/earth.jpg');
-
-        this.autoPilot = false;
     }
     dropSupply(t) {
         if (this.nSuppliesDelivered < this.supplies.length) {
@@ -102,12 +100,10 @@ class MyScene extends CGFscene {
     checkKeys(t) {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyP") && this.releasedPKey){
-            this.autoPilot = !this.autoPilot;
-            if (this.autoPilot) this.vehicle.autoPilot();
-            else this.vehicle.stopAutoPilot();
+            this.vehicle.autoPilot();
             this.releasedPKey = false;
         }
-        if (!this.autoPilot){
+        if (!this.vehicle.autoPilotMode){
             if (this.gui.isKeyPressed("KeyW")) {
                 this.vehicle.accelerate(1);
             }
@@ -176,23 +172,12 @@ class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
-        // Scale gui
-        this.pushMatrix();
-        
-
-        /*this.vehicle.display();
-        this.popMatrix();*/
-
-        //This sphere does not have defined texture coordinates
-        //this.sphereMaterial.apply();
-        //this.incompleteSphere.display();
-
         this.pushMatrix();
         this.vehicle.display();
         this.popMatrix();
 
 
-        /*this.pushMatrix();
+        this.pushMatrix();
         for (let i = 0; i < this.supplies.length; i++) {
             this.supplies[i].display();
         }
@@ -203,12 +188,9 @@ class MyScene extends CGFscene {
         this.terrain.display();
         this.popMatrix();
 
-        */
+        
         this.cube.display();
-        //this.billboard.display();
-
-        //this.cylinder.display();
-
+        this.billboard.display();
 
         // ---- END Primitive drawing section
     }

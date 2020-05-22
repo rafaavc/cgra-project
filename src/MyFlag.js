@@ -1,10 +1,17 @@
 class MyFlag extends CGFobject {
+	/**
+     * @method constructor
+     * @param  {CGFscene} scene - MyScene object
+	 */
 	constructor(scene) {
 		super(scene);
 		this.initObjects();
 		this.initTextures();
 	}
 
+	/**
+	 * @method initTextures initializes the textures for the flag
+	 */
 	initTextures() {
 		this.flagAppearance = new CGFappearance(this.scene);
         this.flagTexture = new CGFtexture(this.scene, "images/feup.jpg");
@@ -18,10 +25,18 @@ class MyFlag extends CGFobject {
 		this.flagShader2.setUniformsValues({ timeFactor: 0, speed: 0.3 });
 	}
 
+	/**
+	 * @method initObjects initializes the objects needed for the flag
+	 */
 	initObjects() {
 		this.plane = new MyPlane(this.scene, 100);
 	}
 
+	/**
+	 * @method update updates the flag's shaders' uniforms values
+	 * @param {Number} t - current time
+	 * @param {Number} vehicleSpeed - the speed of the vehicle
+	 */
 	update(t, vehicleSpeed) {
 		let timeF = t / 100 % 1000;
 		let speed = Math.max(Math.abs(vehicleSpeed), 0.3);
@@ -29,6 +44,9 @@ class MyFlag extends CGFobject {
         this.flagShader2.setUniformsValues({ timeFactor: timeF, speed: speed });
 	}
 
+	/**
+	 * @method display displays the flag
+	 */
 	display() {
 		this.scene.pushMatrix();
 

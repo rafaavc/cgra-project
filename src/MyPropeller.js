@@ -15,6 +15,10 @@ class MyPropeller extends CGFobject {
         this.helix = helix;
     }
 
+    /**
+     * @method display displays the propeller
+     * @param {Number} helixAngle - the angle of the propeller's blades
+     */
     display(helixAngle) {
         //this.scene.popMatrix();
         this.scene.pushMatrix();
