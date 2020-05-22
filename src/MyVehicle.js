@@ -3,7 +3,7 @@ class MyVehicle extends CGFobject {
      * @method constructor
      * @param  {CGFscene} scene - MyScene object
      */
-    constructor(scene) {
+    constructor(scene, y) {
         super(scene);
 
         this.initTextures();
@@ -15,9 +15,11 @@ class MyVehicle extends CGFobject {
         this.horizontalOrientation = 0; // Y axis angle
         this.speed = 0;
 
+        this.y = y;
+
         this.position = {
             x: 0,
-            y: 10, // should be 10, it's 0 just for testing
+            y: y, // should be 10, it's 0 just for testing
             z: 0
         };
         this.speedFactor = 1;
@@ -100,7 +102,7 @@ class MyVehicle extends CGFobject {
     reset(){
         this.horizontalOrientation = 0;
         this.position.x = 0;
-        this.position.y = 10;
+        this.position.y = this.y;
         this.position.z = 0;
         this.speed = 0;
         this.propellerAngle = 0;
@@ -129,6 +131,15 @@ class MyVehicle extends CGFobject {
             y: this.position.y,
             z: this.position.z + 5*Math.cos(this.horizontalOrientation + Math.PI/2)
         }
+    }
+
+    /**
+     * @method setY
+     * @param {Number} y - the new y
+     */
+    setY(y) {
+        this.y = y;
+        this.position.y = y;
     }
 
     /**
