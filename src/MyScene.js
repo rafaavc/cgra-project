@@ -12,7 +12,9 @@ class MyScene extends CGFscene {
 
     ViewingModes = {
         ALL: 0,
-        ONLYVEHICLE: 1
+        ONLYVEHICLE: 1,
+        CYLINDER: 2,
+        SPHERE: 3
     }
 
     /**
@@ -23,6 +25,7 @@ class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
+        this.initMaterials();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -46,6 +49,8 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this, 10);
         this.terrain = new MyTerrain(this, 20, 50, 8);
         this.billboard = new MyBillboard(this, 5);
+        this.sphere = new MySphere(this, 50, 50);
+        this.cylinder = new MyCylinder(this, 1, 1, 20);
         this.supplies = [];
         for (let i = 0; i < 5; i++) {
             this.supplies.push(new MySupply(this));
@@ -79,6 +84,17 @@ class MyScene extends CGFscene {
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+    }
+
+    /**
+     * @method initMaterials
+     * @param {*} t 
+     */
+    initMaterials() {
+        this.material = new CGFappearance(this);
+        this.material.setAmbient(3, 3, 3, 1);
+        this.material.setDiffuse(1, 1, 1, 1);
+        this.material.setSpecular(1, 1, 1, 1);
     }
 
     /**
@@ -199,6 +215,7 @@ class MyScene extends CGFscene {
 
         if (this.viewingMode == this.ViewingModes.ALL) {
 
+            this.pushMatrix();
             this.vehicle.display();
             this.popMatrix();
 
@@ -218,14 +235,25 @@ class MyScene extends CGFscene {
             this.scale(50, 50, 50);
             this.cube.display();
             this.popMatrix();
+
             this.billboard.display();
 
-        } else if (this.viewingMode = this.ViewingModes.ONLYVEHICLE) {
+        } else if (this.viewingMode == this.ViewingModes.ONLYVEHICLE) {
 
             this.vehicle.display();
-            this.popMatrix();
 
+        } else if (this.viewingMode == this.ViewingModes.CYLINDER) {
+
+            this.material.apply();
+            this.cylinder.display();
+
+        } else if (this.viewingMode == this.ViewingModes.SPHERE) {
+
+            this.material.apply();
+            this.sphere.display();
+            
         }
+        this.popMatrix();
         // ---- END Primitive drawing section
     }
 
