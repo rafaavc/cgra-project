@@ -199,7 +199,6 @@ class MyScene extends CGFscene {
 
         if (this.viewingMode == this.ViewingModes.ALL) {
 
-            this.pushMatrix();
             this.vehicle.display();
             this.popMatrix();
 
@@ -219,7 +218,6 @@ class MyScene extends CGFscene {
 
         } else if (this.viewingMode = this.ViewingModes.ONLYVEHICLE) {
 
-            this.pushMatrix();
             this.vehicle.display();
             this.popMatrix();
 
