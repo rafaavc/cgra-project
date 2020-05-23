@@ -214,6 +214,7 @@ class MyScene extends CGFscene {
             this.popMatrix();
 
             this.pushMatrix();
+            this.translate(0, 15, 0);
             this.scale(50, 50, 50);
             this.cube.display();
             this.popMatrix();
