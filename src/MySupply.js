@@ -4,6 +4,10 @@ class MySupply extends CGFobject {
         FALLING: 1,
         LANDED: 2
     };
+    /**
+     * @method constructor
+     * @param {CGFscene} scene MyScene obj
+     */
 	constructor(scene) {
         super(scene);
         this.scene = scene;
@@ -23,6 +27,9 @@ class MySupply extends CGFobject {
 		this.material.setTexture(this.texture);
     }
 
+    /**
+     * @method setWhenFallenValues generates random values that are used when displaying the LANDED state
+     */
     setWhenFallenValues() {
         this.fallenVals = {
             pn1: (Math.round(Math.random()) == 0 ? -1 : 1), // either -1 or 1
@@ -36,6 +43,12 @@ class MySupply extends CGFobject {
         }
     }
 
+    /**
+     * @method drop drops the box
+     * @param {Number} pos the position in which the box was when it was dropped
+     * @param {Number} vel the velocity at which the box was going when it was dropped
+     * @param {Number} t the current time
+     */
     drop(pos, vel, t) {
         this.setWhenFallenValues();
         this.position = pos;
@@ -53,6 +66,9 @@ class MySupply extends CGFobject {
         this.lastTime = t;
     }
 
+    /**
+     * @method fall updates the box attributes while falling
+     */
     fall() {
         let val = (this.currentTime-this.lastTime)/1000;
 
@@ -70,6 +86,10 @@ class MySupply extends CGFobject {
         }
     }
 
+    /**
+     * @method update updates the box's attributes
+     * @param {Number} t the current time
+     */
     update(t) {
         this.currentTime = t;
         switch(this.supplyState) {
@@ -82,10 +102,16 @@ class MySupply extends CGFobject {
         this.lastTime = this.currentTime;
     }
 
+    /**
+     * @method reset resets the box
+     */
     reset() {
         this.supplyState = this.SupplyStates.INACTIVE;
     }
 
+    /**
+     * @method display displays the box
+     */
     display() {
         this.scene.pushMatrix();
         switch(this.supplyState) {
@@ -101,6 +127,9 @@ class MySupply extends CGFobject {
         this.scene.popMatrix();
     }
 
+    /**
+     * @method displayLanded displays the box when landed
+     */
     displayLanded() {
         this.material.apply();
 
@@ -147,6 +176,9 @@ class MySupply extends CGFobject {
         this.scene.popMatrix();
     }
 
+    /**
+     * @method displayFalling displays the box while falling
+     */
     displayFalling() {
         this.material.apply();
 

@@ -1,4 +1,15 @@
 class MyTerrain extends CGFobject{
+	/**
+	 * @method constructor
+	 * @param {CGFscene} scene MyScene obj
+	 * @param {Number} nrDivs number of divisions in the plane
+	 * @param {Number} sideSize the size of the side
+	 * @param {Number} maxHeight max height of the terrain
+	 * @param {Number} minS texCoords S min
+	 * @param {Number} maxS texCoords S max
+	 * @param {Number} minT texCoords T min
+	 * @param {Number} maxT texCoords T max
+	 */
 	constructor(scene, nrDivs, sideSize, maxHeight, minS, maxS, minT, maxT) {
         super(scene);
         this.scene = scene;
@@ -19,6 +30,9 @@ class MyTerrain extends CGFobject{
 		this.initBuffers();
 	}
 	
+	/**
+	 * @method initMaterials
+	 */
     initMaterials() {
         this.appearance = new CGFappearance(this.scene);
 		this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -35,11 +49,17 @@ class MyTerrain extends CGFobject{
         this.heightMap = new CGFtexture(this.scene, "images/heightmapMod.jpg");
 	}
 	
+	/**
+	 * @method initShaders
+	 */
     initShaders() {
 		this.shader = new CGFshader(this.scene.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.shader.setUniformsValues({ uSampler2: 1, offsetSize: this.maxHeight });
 	}
 	
+	/**
+	 * @method initBuffers
+	 */
 	initBuffers() {
 		// Generate vertices, normals, and texCoords
 		this.vertices = [];
@@ -75,15 +95,24 @@ class MyTerrain extends CGFobject{
 		this.initGLBuffers();
 	}
 
+	/**
+	 * @method setFillMode
+	 */
 	setFillMode() { 
 		this.primitiveType=this.scene.gl.TRIANGLE_STRIP;
 	}
 
+	/**
+	 * @method setLineMode
+	 */
 	setLineMode() 
 	{ 
 		this.primitiveType=this.scene.gl.LINES;
     }
-    
+	
+	/**
+	 * @method display displays the terrain
+	 */
     display() {
 		this.appearance.apply();
         this.scene.setActiveShader(this.shader);

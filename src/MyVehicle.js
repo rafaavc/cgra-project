@@ -107,6 +107,7 @@ class MyVehicle extends CGFobject {
         this.speed = 0;
         this.propellerAngle = 0;
         this.ruddersAngle = 0;
+        this.autoPilotMode = false;
     }
 
     /**
