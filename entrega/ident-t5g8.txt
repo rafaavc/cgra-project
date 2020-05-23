@@ -6,6 +6,6 @@ Membros:
 
 Observações:
 	Todas as funcionalidades foram implementadas.
-	Quando o dirigível esstá em piloto automático apenas são lidas do teclados as teclas 'R', para fazer reset, 'P', para parar o piloto automático, e 'L', para largar mantimentos.
+	Quando o dirigível está em piloto automático apenas são lidas do teclados as teclas 'R', para fazer reset, 'P', para parar o piloto automático, e 'L', para largar mantimentos.
 	Para velocidades muito pequenas (menores que 0.3 unidades) a ondulação da bandeira não é afetada pela velocidade do dirigível.
-	Para ver alguns elementos da primeira parte do trabalho, por exemplo a esfera com textura do globo e o cilindro, poderá ser necessário descomentar algumas linhas de código na função display do ficheiro MyScene.js
+	Para ver alguns elementos da primeira parte do trabalho, por exemplo a esfera com textura do globo e o cilindro ou para examinar com mais detalhe o veículo, pode-se alterar o Viewing Mode na GUI, que permite selecionar entre várias cenas.

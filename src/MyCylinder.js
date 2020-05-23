@@ -34,10 +34,10 @@ class MyCylinder extends CGFobject {
             
             this.vertices.push(cosA*this.radius, this.height/2, sinA*this.radius);
             this.texCoords.push(currentAngle/(2*Math.PI), 0);
-            this.normals.push(cosA, sinA, 0);
+            this.normals.push(cosA, 0, sinA);
             this.vertices.push(cosA*this.radius, -this.height/2, sinA*this.radius);
             this.texCoords.push(currentAngle/(2*Math.PI), 1);
-            this.normals.push(cosA, sinA, 0);
+            this.normals.push(cosA, 0, sinA);
 
             currentAngle += alpha;
             if (Math.abs(currentAngle - 2*Math.PI) < 0.01) currentAngle = 2*Math.PI;
@@ -45,9 +45,9 @@ class MyCylinder extends CGFobject {
 
         for (let i = 0; i <= this.vertices.length/3 - 3; i++) {
             if (i%2 == 0) {
-                this.indices.push(i, i+1, i+2);
-            } else {
                 this.indices.push(i+1, i, i+2);
+            } else {
+                this.indices.push(i, i+1, i+2);
             }
         }
     

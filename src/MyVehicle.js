@@ -217,6 +217,7 @@ class MyVehicle extends CGFobject {
          */
         this.downCylinder.apply();
         this.scene.translate(0, -0.45, 0);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.cylinder.display();
 
         this.scene.popMatrix();
