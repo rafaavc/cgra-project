@@ -67,6 +67,8 @@ class MyScene extends CGFscene {
         this.scaleFactor = 1;  // scale factor
         this.speedFactor = 1;  // vehicle speed factor
         this.viewingMode = this.ViewingModes.ALL;  // viewing mode
+
+        this.initSphereMaterial();
     }
 
     /**
@@ -84,6 +86,15 @@ class MyScene extends CGFscene {
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+    }
+
+    initSphereMaterial(){
+        this.sphereMaterial = new CGFappearance(this);
+        this.sphereMaterial.setAmbient(0.4, 0.8, 1.6, 1.0);
+        this.sphereMaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.sphereMaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.sphereMaterial.setShininess(10.0);
+        this.sphereMaterial.loadTexture('images/earth.jpg');
     }
 
     /**
@@ -205,13 +216,6 @@ class MyScene extends CGFscene {
 
         // Scale gui
         this.pushMatrix();
-        
-        // Descomentar a linha abaixo para ver o cilindro
-        //this.cylinder.display();
-
-        // Descomentar as duas linhas abaixo para ver a esfera com a textura do globo
-        //this.sphereMaterial.apply();
-        //this.incompleteSphere.display();
 
         if (this.viewingMode == this.ViewingModes.ALL) {
 
