@@ -6,6 +6,10 @@ class MyBillboard extends CGFobject{
         this.totalAmount = totalAmount;
         this.initMaterials();
     }
+
+    /**
+     * @method initMaterials initializes the billboard materials
+     */
     initMaterials(){
         this.appearance = new CGFappearance(this.scene);
         this.appearance.setAmbient(1.02, 1.02, 1.02, 1.0);
@@ -22,6 +26,10 @@ class MyBillboard extends CGFobject{
         this.billBoardAppearance.setShininess(10.0);
         this.billBoardAppearance.loadTexture("images/BillBoard.png");
     }
+
+    /**
+     * @method display displays the billboard
+     */
     display(){
         this.appearance.apply();
 
@@ -74,6 +82,11 @@ class MyBillboard extends CGFobject{
         this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
     }
+
+    /**
+     * @method updateShader updates the billboard's shader's uniforms values
+     * @param {Number} n the number of supplies delivered
+     */
     updateShader(n){
         this.shader.setUniformsValues({ nSuppliesDelivered: n, totalAmount: this.totalAmount });
     }
