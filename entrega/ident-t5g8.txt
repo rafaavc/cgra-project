@@ -1,0 +1,11 @@
+Turma 5 Grupo 8
+
+Membros:
+	Rafael Valente Cristino - up201806680
+	Xavier Ruivo Pisco - up201806134
+
+Observações:
+	Todas as funcionalidades foram implementadas.
+	Quando o dirigível esstá em piloto automático apenas são lidas do teclados as teclas 'R', para fazer reset, 'P', para parar o piloto automático, e 'L', para largar mantimentos.
+	Para velocidades muito pequenas (menores que 0.3 unidades) a ondulação da bandeira não é afetada pela velocidade do dirigível.
+	Para ver alguns elementos da primeira parte do trabalho, por exemplo a esfera com textura do globo e o cilindro, poderá ser necessário descomentar algumas linhas de código na função display do ficheiro MyScene.js

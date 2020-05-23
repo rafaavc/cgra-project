@@ -37,8 +37,8 @@ class MyScene extends CGFscene {
         this.enableTextures(true);
 
         this.selectedTexture = 0;
-        this.textures = ['split_cubemap', 'split_cubemap2', 'split_cubemap3'];
-        this.textureIds = { 'Texture1': 0, 'Texture2': 1, 'Texture3': 2};
+        this.textures = ['split_cubemap', 'split_cubemap2'];
+        this.textureIds = { 'Texture1': 0, 'Texture2': 1};
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
@@ -182,17 +182,25 @@ class MyScene extends CGFscene {
         
         // Draw axis
         if (this.displayAxis)
-            this.axis.display();
+            //this.axis.display();
 
 
         // ---- BEGIN Primitive drawing section
 
+        // Scale gui
+        this.pushMatrix();
+        
+        // Descomentar a linha abaixo para ver o cilindro
+        //this.cylinder.display();
+
+        // Descomentar as duas linhas abaixo para ver a esfera com a textura do globo
+        //this.sphereMaterial.apply();
+        //this.incompleteSphere.display();
+
         if (this.viewingMode == this.ViewingModes.ALL) {
 
-            this.pushMatrix();
             this.vehicle.display();
             this.popMatrix();
-
 
             this.pushMatrix();
             for (let i = 0; i < this.supplies.length; i++) {
@@ -213,7 +221,6 @@ class MyScene extends CGFscene {
 
         } else if (this.viewingMode = this.ViewingModes.ONLYVEHICLE) {
 
-            this.pushMatrix();
             this.vehicle.display();
             this.popMatrix();
 

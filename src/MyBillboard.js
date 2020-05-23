@@ -12,7 +12,7 @@ class MyBillboard extends CGFobject{
      */
     initMaterials(){
         this.appearance = new CGFappearance(this.scene);
-        this.appearance.setAmbient(1.07, 1.07, 1.07, 1.0);
+        this.appearance.setAmbient(1.02, 1.02, 1.02, 1.0);
         this.appearance.setDiffuse(0, 0, 0, 1.0);
         this.appearance.setSpecular(0, 0, 0, 1.0);
         this.appearance.setShininess(10.0);
