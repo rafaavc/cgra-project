@@ -12,7 +12,8 @@ class MyScene extends CGFscene {
 
     ViewingModes = {
         ALL: 0,
-        ONLYVEHICLE: 1
+        ONLYVEHICLE: 1,
+        SPHERE: 2
     }
 
     /**
@@ -46,6 +47,7 @@ class MyScene extends CGFscene {
         this.vehicle = new MyVehicle(this, 10);
         this.terrain = new MyTerrain(this, 20, 50, 8);
         this.billboard = new MyBillboard(this, 5);
+        this.incompleteSphere = new MySphere(this, 16, 8);
         this.supplies = [];
         for (let i = 0; i < 5; i++) {
             this.supplies.push(new MySupply(this));
@@ -61,7 +63,9 @@ class MyScene extends CGFscene {
         this.displayAxis = true; // display axis?
         this.scaleFactor = 1;  // scale factor
         this.speedFactor = 1;  // vehicle speed factor
-        this.viewingMode = this.ViewingModes.ALL;  // viewing mode
+        this.viewingMode = this.ViewingModes.SPHERE;  // viewing mode
+
+        this.initSphereMaterial();
     }
 
     /**
@@ -79,6 +83,15 @@ class MyScene extends CGFscene {
      */
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+    }
+
+    initSphereMaterial(){
+        this.sphereMaterial = new CGFappearance(this);
+        this.sphereMaterial.setAmbient(0.4, 0.8, 1.6, 1.0);
+        this.sphereMaterial.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.sphereMaterial.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.sphereMaterial.setShininess(10.0);
+        this.sphereMaterial.loadTexture('images/earth.jpg');
     }
 
     /**
@@ -182,20 +195,13 @@ class MyScene extends CGFscene {
         
         // Draw axis
         if (this.displayAxis)
-            //this.axis.display();
+            this.axis.display();
 
 
         // ---- BEGIN Primitive drawing section
 
         // Scale gui
         this.pushMatrix();
-        
-        // Descomentar a linha abaixo para ver o cilindro
-        //this.cylinder.display();
-
-        // Descomentar as duas linhas abaixo para ver a esfera com a textura do globo
-        //this.sphereMaterial.apply();
-        //this.incompleteSphere.display();
 
         if (this.viewingMode == this.ViewingModes.ALL) {
 
@@ -216,9 +222,15 @@ class MyScene extends CGFscene {
             this.cube.display();
             this.billboard.display();
 
-        } else if (this.viewingMode = this.ViewingModes.ONLYVEHICLE) {
+        } else if (this.viewingMode == this.ViewingModes.ONLYVEHICLE) {
 
             this.vehicle.display();
+            this.popMatrix();
+
+        } else if (this.viewingMode == this.ViewingModes.SPHERE){
+
+            this.sphereMaterial.apply();
+            this.incompleteSphere.display();
             this.popMatrix();
 
         }

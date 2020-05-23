@@ -25,6 +25,7 @@ class MyBillboard extends CGFobject{
     display(){
         this.appearance.apply();
 
+        //Display left stand front and backwards
         this.scene.pushMatrix();
         this.scene.translate(-0.9, 0.5, 0);
         this.scene.scale(0.2, 1, 0.2);
@@ -32,8 +33,28 @@ class MyBillboard extends CGFobject{
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
+        this.scene.translate(-0.9, 0.5, 0);
+        this.scene.scale(-0.2, 1, 0.2);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        //Display right stand front and backwards
+        this.scene.pushMatrix();
         this.scene.translate(0.9, 0.5, 0);
         this.scene.scale(0.2, 1, 0.2);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(0.9, 0.5, 0);
+        this.scene.scale(-0.2, 1, 0.2);
+        this.plane.display();
+        this.scene.popMatrix();
+
+        //Display the base backwards then front
+        this.scene.pushMatrix();
+        this.scene.translate(0, 1.5, 0);
+        this.scene.scale(-2, 1, 1);
         this.plane.display();
         this.scene.popMatrix();
 
@@ -44,6 +65,7 @@ class MyBillboard extends CGFobject{
         this.plane.display();
         this.scene.popMatrix();
         
+        //Display the counting parts
         this.scene.pushMatrix();
         this.scene.setActiveShader(this.shader);
         this.scene.translate(0, 1.3, 0.01);
