@@ -1,4 +1,13 @@
 class MyPlane extends CGFobject{
+	/**
+	 * @method constructor
+	 * @param {CGFscene} scene MyScene obj
+	 * @param {Number} nrDivs number of divisions in the plane
+	 * @param {Number} minS texCoords S min
+	 * @param {Number} maxS texCoords S max
+	 * @param {Number} minT texCoords T min
+	 * @param {Number} maxT texCoords T max
+	 */
 	constructor(scene, nrDivs, minS, maxS, minT, maxT) {
 		super(scene);
 		// nrDivs = 1 if not provided
@@ -9,10 +18,14 @@ class MyPlane extends CGFobject{
 		this.maxS = maxS || 1;
 		this.minT = minT || 0;
 		this.maxT = maxT || 1;
-		this.q = (this.maxS - this.minS) / this.nrDivs;
-		this.w = (this.maxT - this.minT) / this.nrDivs;
+		this.q = (this.maxS - this.minS) / this.nrDivs;  // texCoords S variation from div to div
+		this.w = (this.maxT - this.minT) / this.nrDivs;  // texCoords T variation from div to div
 		this.initBuffers();
 	}
+
+	/**
+	 * @method initBuffers
+	 */
 	initBuffers() {
 		// Generate vertices, normals, and texCoords
 		this.vertices = [];
@@ -48,10 +61,16 @@ class MyPlane extends CGFobject{
 		this.initGLBuffers();
 	}
 
+	/**
+	 * @method setFillMode
+	 */
 	setFillMode() { 
 		this.primitiveType=this.scene.gl.TRIANGLE_STRIP;
 	}
 
+	/**
+	 * @method setLineMode
+	 */
 	setLineMode() 
 	{ 
 		this.primitiveType=this.scene.gl.LINES;

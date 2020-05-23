@@ -60,7 +60,7 @@ class MyScene extends CGFscene {
         /**
          * Objects connected to MyInterface
          */
-        this.displayAxis = true; // display axis?
+        this.displayAxis = false; // display axis?
         this.scaleFactor = 1;  // scale factor
         this.speedFactor = 1;  // vehicle speed factor
         this.viewingMode = this.ViewingModes.ALL;  // viewing mode

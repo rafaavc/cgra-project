@@ -1,10 +1,18 @@
 class MyHelix extends CGFobject{
+    /**
+     * @method constructor
+     * @param {CGFscene} scene MyScene obj
+     */
     constructor(scene){
         super(scene);
         this.scene = scene;
         this.plane = new MyPlane(scene);
         this.triangle = new MyTriangle(scene);
     }
+
+    /**
+     * @method display displays the helix
+     */
     display(){
         this.plane.display();
 
