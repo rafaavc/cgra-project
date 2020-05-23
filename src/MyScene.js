@@ -63,7 +63,7 @@ class MyScene extends CGFscene {
         this.displayAxis = true; // display axis?
         this.scaleFactor = 1;  // scale factor
         this.speedFactor = 1;  // vehicle speed factor
-        this.viewingMode = this.ViewingModes.SPHERE;  // viewing mode
+        this.viewingMode = this.ViewingModes.ALL;  // viewing mode
 
         this.initSphereMaterial();
     }
