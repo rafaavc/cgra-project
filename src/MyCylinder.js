@@ -32,10 +32,10 @@ class MyCylinder extends CGFobject {
             let sinA = Math.sin(currentAngle);
             let cosA = Math.cos(currentAngle);
             
-            this.vertices.push(cosA*this.radius, sinA*this.radius, this.height/2);
+            this.vertices.push(cosA*this.radius, this.height/2, sinA*this.radius);
             this.texCoords.push(currentAngle/(2*Math.PI), 0);
             this.normals.push(cosA, sinA, 0);
-            this.vertices.push(cosA*this.radius, sinA*this.radius, -this.height/2);
+            this.vertices.push(cosA*this.radius, -this.height/2, sinA*this.radius);
             this.texCoords.push(currentAngle/(2*Math.PI), 1);
             this.normals.push(cosA, sinA, 0);
 
