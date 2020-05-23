@@ -40,8 +40,8 @@ class MyScene extends CGFscene {
 
 
         this.selectedTexture = 0;
-        this.textures = ['split_cubemap', 'split_cubemap2', 'split_cubemap3'];
-        this.textureIds = { 'Texture1': 0, 'Texture2': 1, 'Texture3': 2};
+        this.textures = ['split_cubemap', 'split_cubemap2'];
+        this.textureIds = { 'Texture1': 0, 'Texture2': 1};
         this.cube = new MyUnitCubeQuad(this, this.textures[this.selectedTexture]);
 
         //Objects connected to MyInterface
@@ -171,7 +171,7 @@ class MyScene extends CGFscene {
         
         // Draw axis
         if (this.displayAxis)
-            this.axis.display();
+            //this.axis.display();
 
 
         // ---- BEGIN Primitive drawing section
@@ -179,11 +179,10 @@ class MyScene extends CGFscene {
         // Scale gui
         this.pushMatrix();
         
+        // Descomentar a linha abaixo para ver o cilindro
+        //this.cylinder.display();
 
-        /*this.vehicle.display();
-        this.popMatrix();*/
-
-        //This sphere does not have defined texture coordinates
+        // Descomentar as duas linhas abaixo para ver a esfera com a textura do globo
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
 
@@ -207,7 +206,6 @@ class MyScene extends CGFscene {
         this.cube.display();
         this.billboard.display();
 
-        //this.cylinder.display();
 
 
         // ---- END Primitive drawing section
