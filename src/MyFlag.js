@@ -1,60 +1,74 @@
-class MyFlag extends CGFobject{
-	constructor(scene, nrDivs, minS, maxS, minT, maxT) {
+class MyFlag extends CGFobject {
+	/**
+     * @method constructor
+     * @param  {CGFscene} scene - MyScene object
+	 */
+	constructor(scene) {
 		super(scene);
-		// nrDivs = 1 if not provided
-		nrDivs = typeof nrDivs !== 'undefined' ? nrDivs : 1;
-		this.nrDivs = nrDivs;
-		this.patchLength = 1.0 / nrDivs;
-		this.minS = minS || 0;
-		this.maxS = maxS || 1;
-		this.minT = minT || 0;
-		this.maxT = maxT || 1;
-		this.q = (this.maxS - this.minS) / this.nrDivs;
-		this.w = (this.maxT - this.minT) / this.nrDivs;
-		this.initBuffers();
-	}
-	initBuffers() {
-		// Generate vertices, normals, and texCoords
-		this.vertices = [];
-		this.normals = [];
-		this.texCoords = [];
-		var yCoord = 0.5;
-		for (var j = 0; j <= this.nrDivs; j++) {
-			var xCoord = -0.5;
-			for (var i = 0; i <= this.nrDivs; i++) {
-				this.vertices.push(xCoord, yCoord, 0);
-				this.normals.push(0, 0, 1);
-				this.texCoords.push(this.minS + i * this.q, this.minT + j * this.w);
-				xCoord += this.patchLength;
-			}
-			yCoord -= this.patchLength;
-		}
-		// Generating indices
-		this.indices = [];
-
-		var ind = 0;
-		for (var j = 0; j < this.nrDivs; j++) {
-			for (var i = 0; i <= this.nrDivs; i++) {
-				this.indices.push(ind);
-				this.indices.push(ind + this.nrDivs + 1);
-				ind++;
-			}
-			if (j + 1 < this.nrDivs) {
-				this.indices.push(ind + this.nrDivs);
-				this.indices.push(ind);
-			}
-		}
-		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
-		this.initGLBuffers();
+		this.initObjects();
+		this.initTextures();
 	}
 
-	setFillMode() { 
-		this.primitiveType=this.scene.gl.TRIANGLE_STRIP;
+	/**
+	 * @method initTextures initializes the textures for the flag
+	 */
+	initTextures() {
+		this.flagAppearance = new CGFappearance(this.scene);
+        this.flagTexture = new CGFtexture(this.scene, "images/feup.jpg");
+        this.flagAppearance.setTexture(this.flagTexture);
+		this.flagAppearance.setTextureWrap('REPEAT', 'REPEAT');
+		
+        this.flagShader = new CGFshader(this.scene.gl, "shaders/flag.vert", "shaders/flag.frag");
+		this.flagShader.setUniformsValues({ timeFactor: 0, speed: 0.3 });
+		
+		this.flagShader2 = new CGFshader(this.scene.gl, "shaders/flag2.vert", "shaders/flag.frag");
+		this.flagShader2.setUniformsValues({ timeFactor: 0, speed: 0.3 });
 	}
 
-	setLineMode() 
-	{ 
-		this.primitiveType=this.scene.gl.LINES;
-	};
+	/**
+	 * @method initObjects initializes the objects needed for the flag
+	 */
+	initObjects() {
+		this.plane = new MyPlane(this.scene, 100);
+	}
+
+	/**
+	 * @method update updates the flag's shaders' uniforms values
+	 * @param {Number} t - current time
+	 * @param {Number} vehicleSpeed - the speed of the vehicle
+	 */
+	update(t, vehicleSpeed) {
+		let timeF = t / 100 % 1000;
+		let speed = Math.max(Math.abs(vehicleSpeed), 0.3);
+        this.flagShader.setUniformsValues({ timeFactor: timeF, speed: speed });
+        this.flagShader2.setUniformsValues({ timeFactor: timeF, speed: speed });
+	}
+
+	/**
+	 * @method display displays the flag
+	 */
+	display() {
+		this.scene.pushMatrix();
+
+        this.scene.scale(1, 0.25, 1);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+		this.flagAppearance.apply();
+		
+        this.scene.setActiveShader(this.flagShader);
+        this.plane.display();
+        this.scene.setActiveShader(this.scene.defaultShader);
+        
+        this.scene.popMatrix();
+        this.scene.pushMatrix();
+
+        this.scene.scale(1, 0.25, -1);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+        this.flagAppearance.apply();
+        this.scene.setActiveShader(this.flagShader2);
+        this.plane.display();
+		this.scene.setActiveShader(this.scene.defaultShader);
+
+        this.scene.popMatrix();
+	}
 
 }

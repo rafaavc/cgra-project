@@ -3,9 +3,22 @@
 * @constructor
 */
 class MyScene extends CGFscene {
+    /**
+     * @method constructor
+     */
     constructor() {
         super();
     }
+
+    ViewingModes = {
+        ALL: 0,
+        ONLYVEHICLE: 1
+    }
+
+    /**
+     * @method init
+     * @param {CGFapplication} application 
+     */
     init(application) {
         super.init(application);
         this.initCameras();
@@ -23,39 +36,67 @@ class MyScene extends CGFscene {
         
         this.enableTextures(true);
 
+        this.selectedTexture = 0;
+        this.textures = ['split_cubemap', 'split_cubemap2'];
+        this.textureIds = { 'Texture1': 0, 'Texture2': 1};
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8);
-        this.cylinder = new MyCylinder(this, 1, 5, 10);
-        this.vehicle = new MyVehicle(this);
+        this.cube = new MyUnitCubeQuad(this, this.textures[this.selectedTexture]);
+        this.vehicle = new MyVehicle(this, 10);
         this.terrain = new MyTerrain(this, 20, 50, 8);
         this.billboard = new MyBillboard(this, 5);
         this.supplies = [];
         for (let i = 0; i < 5; i++) {
             this.supplies.push(new MySupply(this));
         }
+
         this.nSuppliesDelivered = 0;
         this.releasedLKey = true;
         this.releasedPKey = true;
 
-
-        this.selectedTexture = 0;
-        this.textures = ['split_cubemap', 'split_cubemap2'];
-        this.textureIds = { 'Texture1': 0, 'Texture2': 1};
-        this.cube = new MyUnitCubeQuad(this, this.textures[this.selectedTexture]);
-
-        //Objects connected to MyInterface
-        this.displayAxis = true;
-        //Scale factor
-        this.scaleFactor = 1;
-        //Speed factor
-        this.speedFactor = 1;
-
-        this.sphereMaterial = new CGFappearance(this);
-        this.sphereMaterial.loadTexture('images/earth.jpg');
-
-        this.autoPilot = false;
+        /**
+         * Objects connected to MyInterface
+         */
+        this.displayAxis = true; // display axis?
+        this.scaleFactor = 1;  // scale factor
+        this.speedFactor = 1;  // vehicle speed factor
+        this.viewingMode = this.ViewingModes.ALL;  // viewing mode
     }
+
+    /**
+     * @method initLights
+     */
+    initLights() {
+        this.lights[0].setPosition(15, 2, 5, 1);
+        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.lights[0].enable();
+        this.lights[0].update();
+    }
+    
+    /**
+     * @method initCameras
+     */
+    initCameras() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
+    }
+
+    /**
+     * @method update called periodically as per set in setUpdatePeriod
+     * @param {Number} t current time
+     */
+    update(t){
+        this.checkKeys(t);
+        this.vehicle.update(t);
+        for (let i = 0; i < this.supplies.length; i++) {
+            this.supplies[i].update(t);
+        }
+    }
+
+    /**
+     * @method dropSupply drops a supply
+     * @param {Number} t current time
+     */
     dropSupply(t) {
         if (this.nSuppliesDelivered < this.supplies.length) {
             this.supplies[this.nSuppliesDelivered].drop(
@@ -66,6 +107,10 @@ class MyScene extends CGFscene {
         }
         this.billboard.updateShader(this.nSuppliesDelivered);
     }
+
+    /**
+     * @method resetR resets the scene
+     */
     resetR() {
         this.vehicle.reset();
         this.autoPilot = false;
@@ -75,39 +120,18 @@ class MyScene extends CGFscene {
         this.nSuppliesDelivered = 0;
         this.billboard.updateShader(this.nSuppliesDelivered);
     }
-    initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
-        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-        this.lights[0].enable();
-        this.lights[0].update();
-    }
-    initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 0, 0));
-    }
-    setDefaultAppearance() {
-        this.setAmbient(0.2, 0.4, 0.8, 1.0);
-        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
-        this.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.setShininess(10.0);
-    }
-    // called periodically (as per setUpdatePeriod() in init())
-    update(t){
-        this.checkKeys(t);
-        this.vehicle.update(t);
-        for (let i = 0; i < this.supplies.length; i++) {
-            this.supplies[i].update(t);
-        }
-    }
 
+    /**
+     * @method checkKeys checks which keys are pressed and acts accordingly
+     * @param {Number} t current time
+     */
     checkKeys(t) {
         // Check for key codes e.g. in https://keycode.info/
         if (this.gui.isKeyPressed("KeyP") && this.releasedPKey){
-            this.autoPilot = !this.autoPilot;
-            if (this.autoPilot) this.vehicle.autoPilot();
-            else this.vehicle.stopAutoPilot();
+            this.vehicle.autoPilot();
             this.releasedPKey = false;
         }
-        if (!this.autoPilot){
+        if (!this.vehicle.autoPilotMode){
             if (this.gui.isKeyPressed("KeyW")) {
                 this.vehicle.accelerate(1);
             }
@@ -143,19 +167,6 @@ class MyScene extends CGFscene {
         }
     }
 
-    //Function that changes texture in cube map
-    updateAppliedTexture() {
-        this.cube.initMaterials(this.textures[this.selectedTexture]);
-    }
-
-    updateScaleFactor(){
-        this.vehicle.updateScaleFactor(this.scaleFactor);
-    }
-
-    updateSpeedFactor() {
-        this.vehicle.updateSpeedFactor(this.speedFactor);
-    }
-
     display() {
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
@@ -186,28 +197,74 @@ class MyScene extends CGFscene {
         //this.sphereMaterial.apply();
         //this.incompleteSphere.display();
 
-        this.pushMatrix();
-        this.vehicle.display();
-        this.popMatrix();
+        if (this.viewingMode == this.ViewingModes.ALL) {
 
+            this.pushMatrix();
+            this.vehicle.display();
+            this.popMatrix();
 
-        this.pushMatrix();
-        for (let i = 0; i < this.supplies.length; i++) {
-            this.supplies[i].display();
+            this.pushMatrix();
+            for (let i = 0; i < this.supplies.length; i++) {
+                this.supplies[i].display();
+            }
+            this.popMatrix();
+
+            this.pushMatrix();
+            this.rotate(-Math.PI/2, 1, 0, 0);
+            this.terrain.display();
+            this.popMatrix();
+
+            this.cube.display();
+            this.billboard.display();
+
+        } else if (this.viewingMode = this.ViewingModes.ONLYVEHICLE) {
+
+            this.pushMatrix();
+            this.vehicle.display();
+            this.popMatrix();
+
         }
-        this.popMatrix();
-
-        this.pushMatrix();
-        this.rotate(-Math.PI/2, 1, 0, 0);
-        this.terrain.display();
-        this.popMatrix();
-
-        
-        this.cube.display();
-        this.billboard.display();
-
-
-
         // ---- END Primitive drawing section
+    }
+
+    /**
+     * @method updateViewingMode used by the gui
+     */
+    updateViewingMode() {
+        if (this.viewingMode == this.ViewingModes.ONLYVEHICLE) {
+            this.vehicle.setY(0);
+        } else if (this.viewingMode == this.ViewingModes.ALL) {
+            this.vehicle.setY(10);
+        } else return;
+    }
+    /**
+     * @method updateAppliedTexture changes the cube's texture (used in the gui)
+     */
+    updateAppliedTexture() {
+        this.cube.initMaterials(this.textures[this.selectedTexture]);
+    }
+
+    /**
+     * @method updateScaleFactor used by the gui
+     */
+    updateScaleFactor(){
+        this.vehicle.updateScaleFactor(this.scaleFactor);
+    }
+
+    /**
+     * @method updateSpeedFactor used in the gui
+     */
+    updateSpeedFactor() {
+        this.vehicle.updateSpeedFactor(this.speedFactor);
+    }
+
+    /**
+     * @method setDefaultAppearance
+     */
+    setDefaultAppearance() {
+        this.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.setDiffuse(0.2, 0.4, 0.8, 1.0);
+        this.setSpecular(0.2, 0.4, 0.8, 1.0);
+        this.setShininess(10.0);
     }
 }
