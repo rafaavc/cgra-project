@@ -42,7 +42,7 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.cube = new MyUnitCubeQuad(this, this.textures[this.selectedTexture]);
+        this.cube = new MyCubeMap(this, this.textures[this.selectedTexture]);
         this.vehicle = new MyVehicle(this, 10);
         this.terrain = new MyTerrain(this, 20, 50, 8);
         this.billboard = new MyBillboard(this, 5);
@@ -68,7 +68,7 @@ class MyScene extends CGFscene {
      * @method initLights
      */
     initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
+        this.lights[0].setPosition(-15, 20, -5, 1);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
@@ -205,7 +205,10 @@ class MyScene extends CGFscene {
             this.terrain.display();
             this.popMatrix();
 
+            this.pushMatrix();
+            this.scale(50, 50, 50);
             this.cube.display();
+            this.popMatrix();
             this.billboard.display();
 
         } else if (this.viewingMode = this.ViewingModes.ONLYVEHICLE) {
